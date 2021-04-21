@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // require('dotenv').config()
 import { getLoggedInUser, login } from './api/UserAPI';
-import {HomePage, NotFoundPage, LoginPage, SignupPage, RecipePage, CreateRecipePage} from './pages/PageIndex'
+import {HomePage, NotFoundPage, LoginPage, SignupPage, RecipePage, CreateRecipePage, UserProfilePage} from './pages/PageIndex'
 import {NavBar} from './components/ComponentIndex'
 
 export const UserContext= React.createContext();
@@ -73,7 +73,7 @@ function App() {
               <Route exact path="/signup" component={SignupPage} />
               <Route exact path="/recipes/new/" component={CreateRecipePage} />
               <Route exact path="/recipes/:recipeId/" component={RecipePage} />
-              {/* <Route exact path="/recipes/:user_id/" component={RecipePage} /> */}
+              <Route exact path="/profiles/:user_id/" component={UserProfilePage} />
               <Route component={NotFoundPage} />
             </Switch>
           </ UserContext.Provider>

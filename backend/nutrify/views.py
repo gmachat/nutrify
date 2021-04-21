@@ -4,24 +4,32 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view
 import json
 
-from .models import Comment, Rating, Recipe
-from .serializers import CommentSerializer, RatingSerializer, RecipeSerializer
+from .models import Comment, Rating, Recipe, UserProfile
+from .serializers import CommentSerializer, RatingSerializer, RecipeSerializer, UserProfileSerializer
 # Create your views here.
 
 # ------------user info and homepage---------------
 
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    permission_classes = (AllowAny,)
+
+
 def home(request):
     pass
 
-def get_profile(request, user_id):
-    pass
+# def get_profile(request, user_id):
+#     pass
+    
 
 
-def save_recipe_to_profile(request, recipe_id):
-    pass
+# def save_recipe_to_profile(request, recipe_id):
+#     pass
 
-def like_recipe_from_profile(request, recipe_id):
-    pass
+# def like_recipe_from_profile(request, recipe_id):
+#     pass
 
 
 # --------------recipes-------------------

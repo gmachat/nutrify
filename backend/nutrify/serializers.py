@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Comment, Rating, Recipe
+from .models import Comment, Rating, Recipe, UserProfile
 from django.contrib.auth.models import User
+
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -16,11 +17,25 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = '__all__'
     
-    # def get_fields(self):
-    #     fields = super(CommentSerializer, self).get_fields()
-    #     if self.context['request'].method == "GET":
-    #         fields['user'] = UserSerializer(instance=True)
-    #     return fields
+    def get_fields(self):
+        fields = super(RecipeSerializer, self).get_fields()
+        if self.context['request'].method == "GET":
+            fields['created_by'] = UserProfileSerializer(instance=True)
+        return fields
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+    created_recipes = RecipeSerializer(many=True, read_only=True)
+    created_recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+    def get_fields(self):
+        fields = super(UserProfileSerializer, self).get_fields()
+        if self.context['request'].method == "GET":
+            fields['user'] = UserSerializer(instance=True)
+        return fields
 
 class CommentSerializer(serializers.ModelSerializer):
 

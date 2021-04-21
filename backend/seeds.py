@@ -40,19 +40,19 @@ ingredients3 = [
 
 
 u1 = User(username="greg123", first_name='Greg', last_name='Machat', email='greg@gmail.com')
-u1.set_password('test123123')
+u1.set_password('test123')
 u1.save()
 up1 = UserProfile(user=u1)
 up1.save()
 
 u2 = User(username="adam123", first_name='Adam', last_name='Cucchiara', email='adam@gmail.com')
-u2.set_password('test123123')
+u2.set_password('test123)
 u2.save()
 up2 = UserProfile(user=u2)
 up2.save()
 
 u3 = User(username="evan123", first_name='Evan', last_name='Gerry', email='evan@gmail.com')
-u3.set_password('test123123')
+u3.set_password('test123')
 u3.save()
 up3 = UserProfile(user=u3)
 up3.save()

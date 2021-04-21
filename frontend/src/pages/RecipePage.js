@@ -40,7 +40,8 @@ function RecipePage(props) {
       <div className="main-column-top">
         <div className="recipe-main-info">
         <div className="recipe-main-info-left" >
-        <h1 className="main-header recipe-header">{recipe?.title}</h1>
+        <h2 className="main-header recipe-header">{recipe?.title}</h2>
+        <div className="creator-name">by: {recipe.created_by.user.username}</div>
         <div className="recipe-subinfo">
           <div>Prep Time: {recipe?.prep_time} minutes</div>
           <div>Cook Time: {recipe?.cook_time} minutes</div>
@@ -56,6 +57,10 @@ function RecipePage(props) {
         <h2>Ingredients</h2>
         <div className="recipe-ingredient-list">
           {renderIngredients()}
+        </div>
+        <div>
+          <h2>Preperation</h2>
+          {recipe.preperation ? recipe.preperation : <div>User did not provide preperation steps </div>}
         </div>
       </div>
       <div className="right-sidebar">

@@ -1,16 +1,29 @@
-import React, {Fragment, useState} from 'react'
-import {createNewRecipe, getRecipeAnalysis} from '../../api/RecipeApi'
+import React, {Fragment, useContext, useState} from 'react'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import S3FileUpload from 'react-s3'
+import Loader from "react-loader-spinner";
+import {UserContext} from '../../App'
+
+import {createNewRecipe, getRecipeAnalysis, recipeAutoComplete} from '../../api/RecipeApi'
 import IngredientInputs from './IngredientInputs'
 import { formatRecipeForAnalysis} from '../../Utils/UtilFunctions'
-import S3FileUpload from 'react-s3'
 import {awsConfig} from '../../Utils/AWS/AWSConfig'
 
 
-function RecipeFields(props) {
+function RecipeFields({props}) {
   const [ingredientForms, setIngredientForms] = useState([{'quantity': '', 'measurement': '', 'ingredient': ''}])
+  const [submitError, setSubmitError] = useState(null)
+  const [sendingData, setSendingData] = useState(false)
+  const [autoComplete, setAutoComplete] = useState('')
+  const [autoCompleteList, setAutoCompleteList] = useState(null)
+
+  const user = useContext(UserContext)
+  console.log(user)
+  console.log(user.user.id)
+
 
   const handleRecipeSubmit = async (e) => {
-    console.log(e.target)
+    setSubmitError(null)
     const recipeObj ={}
     let recipeImage;
     let ingredients = []
@@ -34,37 +47,62 @@ function RecipeFields(props) {
     }
     recipeObj['ingredients'] = ingredients
     console.log(recipeObj)
+    setSendingData(true)
     try{
     const nutritionAnalysis= await getRecipeAnalysis(formatRecipeForAnalysis(recipeObj))
     recipeObj['nutrition'] = nutritionAnalysis
     }catch(err){
+      setSendingData(false)
+      setSubmitError("Could not retrieve recipe information")
       console.error(err)
+    return
     }
     console.log(recipeObj)
     console.log('sending picture to s3')
     try{
-      data = await S3FileUpload.uploadFile(recipeImage, awsConfig)
+      if (recipeImage) data = await S3FileUpload.uploadFile(recipeImage, awsConfig)
       console.log('data uploaded')
       console.log(data)
     }catch(err){
+      setSendingData(false)
+      setSubmitError("Could not upload Image. Please upload without image or try again later")
       console.error(err)
+      return
     }
-    
     console.log('storing data...')
+    if(data) recipeObj['recipe_image'] = data.location
+    recipeObj['created_by'] = user.user.id
 
-    recipeObj['recipe_image'] = data.location
-    const createdRecipe = createNewRecipe(recipeObj)
+    const createdRecipe = await createNewRecipe(recipeObj)
     console.log(createdRecipe)
+    setSendingData(false)
     props.history.push(`/recipes/${createdRecipe.id}`)
   }
 
+  const autoCompleteGrabber = async (input) =>{
+    console.log(input.target.dataset.inputnumber)
+    const autoCompleteData = await recipeAutoComplete(input.target.value)
+    console.log(autoCompleteData)
+    setAutoCompleteList(input.target.dataset.inputnumber)
+    setAutoComplete(autoCompleteData)
+    return autoCompleteData
+  }
+
   const handleIngredientInput = (e) => {
+    console.log(e)
     const [name, number] = e.target.name.split('-')
     const updateForms = [...ingredientForms]
     const newForm = {...updateForms[number]}
     newForm[name] = e.target.value
+    autoCompleteGrabber(e)
     updateForms[number] = newForm
     setIngredientForms(updateForms)
+  }
+
+  const clearAutoComplete = () => {
+    setTimeout(() => {
+      setAutoComplete(null)
+    }, 300)
   }
 
 
@@ -82,7 +120,12 @@ function RecipeFields(props) {
 
 
   return (
-    <form onSubmit={(e) => handleRecipeSubmit(e)}>
+    <form className="create-recipe-form" onSubmit={(e) => handleRecipeSubmit(e)} >
+      {sendingData && <div className='sending-data'><Loader type="TailSpin" color="#26b421" height={80} width={80} /></div>}
+      {submitError && (<div className="form-error danger">
+                        <div className="close-box" onClick={() => setSubmitError(null)}>X</div>
+                        <div>{submitError}</div>
+                      </div>)}
       <div className='form-section'>
         <label htmlFor={'title'}>Title</label>
         <input type="text" data-formtype='title' name={'title'}></input >
@@ -101,8 +144,8 @@ function RecipeFields(props) {
       </div>
       <div className="ingredients-list">
       <div className='form-section'>
-        <IngredientInputs removeIngredientField={removeIngredientField} handleIngredientInput={handleIngredientInput} listOfInput={ingredientForms}/>
-        <div onClick={() => addIngredientField ()}>Add Another Ingredient</div>
+        <IngredientInputs removeIngredientField={removeIngredientField} handleIngredientInput={handleIngredientInput} listOfInput={ingredientForms} autoCompleteList={autoCompleteList} autoComplete={autoComplete} setAutoComplete={setAutoComplete} clearAutoComplete={clearAutoComplete}/>
+        <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Another Ingredient</div>
       </div>
       </div>
       <div className='form-section'>

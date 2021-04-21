@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {UserContext} from '../App'
+import NutrifyLogo from '../resources/images/nutrifyLogoHeader.png'
 
 function NavBar() {
   const userInfo = useContext(UserContext)
@@ -23,15 +24,17 @@ function NavBar() {
 
   return   (     
     <div className='nav-bar'>
-    <Link to="/">Nutrify Logo</Link>
-    <div className="nav-align-center">
-      <div>
+    <Link className="nav-logo-link" to="/"><img className="nav-logo" src={NutrifyLogo} /></Link>
+    {userInfo.user && (
+      <div className="nav-align-center">
+      <Link to={`/profiles/${userInfo.user.id}`}>
         Profile
-      </div>
-      <Link to="recipes/new">
+      </Link>
+      <Link to="/recipes/new">
         Create
       </Link>
     </div>
+    )}
     <div className="nav-align-right">
   {loginStatus}
   </div>

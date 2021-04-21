@@ -20,7 +20,7 @@ function NutritionSideBar({recipe}) {
   }
 
 
-  if(recipe){
+  if(recipe && recipe.nutrition){
   const {nutrition} = recipe
   return (
     <Fragment>

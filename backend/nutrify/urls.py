@@ -19,12 +19,14 @@ urlpatterns = [
     # path("update_ratingt/<int:ratingt_id>/", views.update_ratingt),
     # path("delete_ratingt/<int:ratingt_id>/", views.delete_ratingt),
 
-    path('profile/<int:user_id>/', views.get_profile),
+    # path('profile/<int:user_id>/', views.get_profile),
 ]
 
 router = DefaultRouter()
 router.register(r'recipes', views.RecipeViewSet, basename='recipe')
 router.register(r'comments', views.CommentViewSet, basename='comment')
 router.register(r'ratings', views.RatingViewSet, basename='rating')
+router.register(r'profiles', views.UserProfileViewSet, basename='profile')
+
 
 urlpatterns += router.urls

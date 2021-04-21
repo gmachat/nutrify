@@ -17,7 +17,6 @@ function HomePage() {
 
   
   if(recipes) {
-    console.log(recipes)
    recipeList = displayRecipesInList(recipes)
   }
 

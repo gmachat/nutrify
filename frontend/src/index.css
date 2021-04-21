@@ -3,6 +3,8 @@
   --secondary-color: rgb(33, 106, 180);
   --tertiary-color: rgb(190, 55, 55);
   --quaternary-color: rgb(49, 49, 49);
+  --background-color: rgb(216, 255, 213);
+  --award-color: rgb(255, 250, 159);
 
 }
 
@@ -19,6 +21,11 @@ body {
 
 }
 
+.danger{
+  background-color: rgb(164, 0, 0);
+  color: white;
+}
+
 /* ------------------------------NavBar------------------------------ */
 
 .nav-bar{
@@ -29,6 +36,12 @@ body {
   align-items: middle;
 }
 
+.nav-align-center{
+  width: 80%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
 
 .login-logout-box{
   position: relative;
@@ -39,7 +52,19 @@ body {
   justify-content: space-between;
 }
 
-/* -------------------HomePage------------------------ */
+.nav-logo-link{
+height: inherit;
+display: flex;
+align-items: center;
+padding-left:5px;
+}
+
+.nav-logo{
+  height: 90%;
+}
+
+
+/* -------------------Page Layout------------------------ */
 .main-grid{
   margin-top: 10px;
   display: grid;
@@ -78,16 +103,20 @@ body {
 /*--------------main column top content------------------*/
 .recipe-main-info{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr auto;
 }
 
 .recipe-main-info-left{
 grid-column: 1;
 display: grid;
-grid-template-rows: minmax(auto, 100px) auto;
+grid-template-rows: auto auto;
 }
 
 .recipe-header{
+  text-align: center;
+}
+
+.creator-name{
   text-align: center;
 }
 
@@ -106,8 +135,8 @@ padding: 1em
 
 .recipe-image{
   height: auto;
-  max-height:250px;
-  width: 100%;
+  max-height: 250px;
+  width: fit-content;
   max-width: 250px;
 }
 
@@ -115,6 +144,56 @@ padding: 1em
 
 .recipe-ingredient-list{
   
+}
+
+
+.recipe-list-item{
+border-radius: 5px;
+position: relative;
+padding: 10px;
+border: 1px black solid;
+margin: 5px;
+box-shadow: 1px 1px var(--primary-color);
+height: 5em;
+display: grid;
+grid-template-rows: 3fr auto;
+grid-template-columns: auto auto;
+background-color: var(--background-color);
+}
+
+.recipe-link{
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  flex-direction: row;
+  height: 4em;
+}
+
+.recipe-thumbnail-frame{
+  height: inherit
+}
+
+.recipe-thumbnail{
+  position: relative;
+  border-radius: 5px;;
+  height: 100%
+}
+
+.recipe-list-username{
+  display: flex;
+  justify-content: flex-end;
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.health-labels{
+  grid-row:2;
+  grid-column: 1/ span 2;
+  display: flex;
+  justify-content: space-evenly;
+  color: var(--secondary-color);
+  background-color: var(--award-color);
+  width: 100%;
 }
 
 /* --------------left sidebar content---------------- */
@@ -145,4 +224,76 @@ padding: 3px;
 
 .nutrient-list{
   padding: 1em;
+}
+
+/* --------------------create form------------------ */
+.create-recipe-form{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section{
+  padding: 5px
+}
+
+.form-section input{
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.form-section textarea{
+  width: 90%;
+  height: 10em;
+}
+
+.form-error{
+text-align: center;
+position: relative;
+padding-bottom: 10px;
+}
+
+.sending-data{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width:100%;
+  background-color: rgba(0, 0, 0, 0.334);
+}
+
+.close-box{
+  /* position: absolute; */
+  text-align: end;
+  top:5px;
+  right:5px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.remove-ingredient-button{
+  width: fit-content;
+  padding: 2px;
+  background-color: var(--tertiary-color);
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-ingredient-button{
+  border-radius: 5px;
+
+  width: fit-content;
+  padding: 2px;
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* -------------Create Recip Form---------------------- */
+.auto-complete-dropdown{
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
 }

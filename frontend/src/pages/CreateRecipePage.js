@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 
-import {RecipeFields} from '../components/ComponentIndex'
+import {RecipeFields, MustLogin} from '../components/ComponentIndex'
+import {UserContext} from '../App'
 
-function CreateRecipePage() {
-
+function CreateRecipePage(props) {
+  const user = useContext(UserContext)
 
   return (
     <div className="main-grid">
@@ -15,7 +16,7 @@ function CreateRecipePage() {
 
     </div>
     <div className="main-column-bottom">
-      <RecipeFields />
+      {user.user ? <RecipeFields props={props}/> : <MustLogin userAction="create a recipe"></MustLogin>}
     </div>
     <div className="right-sidebar">
       calculator for minutes-hours
