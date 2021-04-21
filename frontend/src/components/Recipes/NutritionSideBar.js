@@ -3,7 +3,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 function NutritionSideBar({recipe}) {
   const [nutrientOrDaily, setNutrientOrDaily] = useState('totalNutrients')
 
-  console.log('render')
   const toggleNutrients = (newSet) => {
     setNutrientOrDaily(newSet)
   }
@@ -12,7 +11,6 @@ function NutritionSideBar({recipe}) {
   const renderNutrients = (recipe) => {
     const nutritionObj = recipe.nutrition[nutrientOrDaily]
     //divide by servings
-    console.log(nutritionObj)
     return Object.values(nutritionObj).map((nutrient, i) => {
       return (<div key={`${nutrient.label}-${i}`}>
         {nutrient.label} : {Math.floor(nutrient.quantity / recipe.yields)}{nutrient.unit}

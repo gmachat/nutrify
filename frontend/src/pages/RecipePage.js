@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import defaultImage from '../resources/images/default_recipe_image.jpeg'
 import {getUserRecipeById} from '../api/RecipeApi'
 import {NutritionSideBar} from '../components/ComponentIndex'
 
@@ -10,9 +11,7 @@ function RecipePage(props) {
   const recipeId = props.match.params.recipeId
 
   const getRecipe = async () => {
-    console.log(recipeId)
     let recipe = await getUserRecipeById(recipeId)
-    console.log(recipe)
     setRecipe(recipe)
   } 
 
@@ -39,10 +38,19 @@ function RecipePage(props) {
         <NutritionSideBar recipe={recipe} />
       </div>
       <div className="main-column-top">
-        <h1>{recipe?.title}</h1>
-        <div>Prep Time: {recipe?.prep_time} minutes</div>
-        <div>Cook Time: {recipe?.cook_time} minutes</div>
-        <div>Yields {recipe?.yields} servings</div>
+        <div className="recipe-main-info">
+        <div className="recipe-main-info-left" >
+        <h1 className="main-header recipe-header">{recipe?.title}</h1>
+        <div className="recipe-subinfo">
+          <div>Prep Time: {recipe?.prep_time} minutes</div>
+          <div>Cook Time: {recipe?.cook_time} minutes</div>
+          <div>Yields {recipe?.yields} servings</div>
+          </div>
+        </div>
+        <div className="recipe-main-info-right" >
+          <img className="recipe-image" src={recipe?.recipe_image ? recipe.recipe_image : defaultImage} />
+        </div>
+        </div>
       </div>
       <div className="main-column-bottom">
         <h2>Ingredients</h2>

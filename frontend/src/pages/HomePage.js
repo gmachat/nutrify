@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 
-import {displayRecipesInList} from '../UtilFunctions/UtilFunctions'
+import {displayRecipesInList} from '../Utils/UtilFunctions'
 import {getUserRecipes} from '../api/RecipeApi'
 
 

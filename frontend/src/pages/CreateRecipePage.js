@@ -5,13 +5,6 @@ import {RecipeFields} from '../components/ComponentIndex'
 function CreateRecipePage() {
 
 
-
-
-
-
-
-
-
   return (
     <div className="main-grid">
     <div className="left-sidebar">

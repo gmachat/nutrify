@@ -1,19 +1,21 @@
 import React, {Fragment, useState} from 'react'
 import {createNewRecipe, getRecipeAnalysis} from '../../api/RecipeApi'
 import IngredientInputs from './IngredientInputs'
-import { formatRecipeForAnalysis} from '../../UtilFunctions/UtilFunctions'
+import { formatRecipeForAnalysis} from '../../Utils/UtilFunctions'
+import S3FileUpload from 'react-s3'
+import {awsConfig} from '../../Utils/AWS/AWSConfig'
 
 
-
-function RecipeFields() {
-
-
+function RecipeFields(props) {
   const [ingredientForms, setIngredientForms] = useState([{'quantity': '', 'measurement': '', 'ingredient': ''}])
 
   const handleRecipeSubmit = async (e) => {
+    console.log(e.target)
     const recipeObj ={}
+    let recipeImage;
     let ingredients = []
     let currentIngredient = ''
+    let data;
     e.preventDefault()
     for(let field of e.target){
       if(field.dataset.formtype === 'ingredient'){
@@ -22,8 +24,12 @@ function RecipeFields() {
         currentIngredient = ''        
       }else if(field.dataset.formtype === 'measurement' || field.dataset.formtype === 'quantity'){
         currentIngredient += `${field.value} `
+      }else if(field.dataset.formtype === 'recipe_image'){
+        recipeImage = field.files[0]
+      }else if(!field.name){
+        continue
       }else{
-        recipeObj[field.name] = field.value
+        if(field.value) recipeObj[field.name] = field.value
       }
     }
     recipeObj['ingredients'] = ingredients
@@ -35,7 +41,21 @@ function RecipeFields() {
       console.error(err)
     }
     console.log(recipeObj)
-    createNewRecipe(recipeObj)
+    console.log('sending picture to s3')
+    try{
+      data = await S3FileUpload.uploadFile(recipeImage, awsConfig)
+      console.log('data uploaded')
+      console.log(data)
+    }catch(err){
+      console.error(err)
+    }
+    
+    console.log('storing data...')
+
+    recipeObj['recipe_image'] = data.location
+    const createdRecipe = createNewRecipe(recipeObj)
+    console.log(createdRecipe)
+    props.history.push(`/recipes/${createdRecipe.id}`)
   }
 
   const handleIngredientInput = (e) => {
@@ -88,6 +108,10 @@ function RecipeFields() {
       <div className='form-section'>
         <label htmlFor={'preperation'}>Preperation</label>
         <textarea name={'preperation'} data-formtype='preperation' placeholder="How do you prepare this dish?"></textarea>
+      </div>
+      <div className="form-section">
+        <label htmlFor={'recipe_image'}>Choose image for recipe</label>
+        <input type="file" data-formtype='recipe_image' name='recipe_image'/>
       </div>
         <button type="submit">Submit</button>
       </form>

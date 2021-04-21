@@ -1,10 +1,21 @@
-import React from 'react'
-import S3FileUpload from 'react-s3'
 
-const config = {
-  bucketName: '	nutrify-images',
-  dirName: 'ecipe-images/', 
-  region: 'us-east-2',
-  accessKeyId: 'Enter accessKeyId here',
-  secretAccessKey: 'Enter secretAccessKey'
+
+
+
+import React from 'react'
+
+function UploadImage() {
+
+  const upload = async (e) => {
+    return data
+  }
+
+
+  return (
+    <div>
+      <input type="file" />
+    </div>
+  )
 }
+
+export default UploadImage
