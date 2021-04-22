@@ -32,7 +32,7 @@ function HomePage() {
       <div className="main-column-top">
         <div>Your Dashboard</div>
       </div>
-      <div className="main-column-bottom">
+      <div className="main-column-bottom homepage-bottom">
         <h2>Recent Recipes</h2>
         {recipeList}
       </div>

@@ -11,8 +11,8 @@ function CreateRecipePage(props) {
     <div className="left-sidebar">
       {/* <NutritionSideBar nutrition={recipeNutrition} /> */}
     </div>
-    <div className="main-column-top">
-      <h1>Create New Recipe!</h1>
+    <div className="main-column-top createRecipePage-header">
+      <h1>Nutrify Your Recipe!</h1>
 
     </div>
     <div className="main-column-bottom">

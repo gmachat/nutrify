@@ -23,7 +23,7 @@ function IngredientInputs({removeIngredientField, handleIngredientInput, listOfI
 
 
     const autoCompleteMenu = () => {
-    return (
+    if (autoComplete && autoComplete.length > 0)return (
     <div className="auto-complete-dropdown">
       {autoComplete && autoComplete.map((el, i )=> {
         return <div onClick={(e) => handleAutoCompleteClick(e)} className={'auto-complete-item'} data-value={el} name={`ingredient-${autoCompleteList ? autoCompleteList : '0'}`}>{el}</div>
@@ -39,12 +39,14 @@ function IngredientInputs({removeIngredientField, handleIngredientInput, listOfI
         {
         listOfInput.map((inputEl, i) => {
           return (
-            <div className='form-section' key={`ingredient-${i}`}>
-              <label htmlFor={`quantity-${i}`}>Quantity</label>
-              <input type='number' data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)}/>
-              <label htmlFor={`measurement-${i}`}>Measurement</label>
-              <select type='select' data-formtype='measurement'name={`measurement-${i}`} value={inputEl.measurement} onChange={(e) => handleIngredientInput(e)} >
-                <option value=""></option>
+            <div className='ingredient-form-section' key={`ingredient-${i}`}>
+              <span>
+              <input type='number' data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)} className="quantity" placeholder='Quantity'/>
+              </span>
+              <span>
+              {/* <label htmlFor={`measurement-${i}`}>Measurement</label> */}
+              <select type='select' data-formtype='measurement'name={`measurement-${i}`} value={inputEl.measurement} onChange={(e) => handleIngredientInput(e)}  className="measurement" >
+                <option value="" disabled selected>Measurement</option>                
                 <option value="Ounce">Ounce</option>
                 <option value="Gram">Gram</option>
                 <option value="Pound">Pound</option>
@@ -61,11 +63,16 @@ function IngredientInputs({removeIngredientField, handleIngredientInput, listOfI
                 <option value="Tablespoon">Tablespoon</option>	
                 <option value="Teaspoon">Teaspoon</option>	
               </select>
-              <label htmlFor={`ingredient-${i}`}>Ingredient</label>
-              <input type='text' data-formtype='ingredient' data-inputnumber={i} name={`ingredient-${i}`} value={inputEl.ingredient} required onChange={(e) => handleIngredientInput(e)} onBlur={() => clearAutoComplete()} onFocus={(e) => handleIngredientInput(e)}/>
-              {(i != 0 || listOfInput.length > 1 )&& <div className= "remove-ingredient-button" onClick={e => removeIngredientField(e, i)}>Remove</div>}
-              {autoCompleteList == i && autoCompleteMenu()}
-          </div>
+              </span>
+                {/* <label htmlFor={`ingredient-${i}`}>Ingredient</label> */}
+                <div className="form-action-container">
+                <span className="input-autocomplete">
+                  <input type='text' data-formtype='ingredient' data-inputnumber={i} name={`ingredient-${i}`} value={inputEl.ingredient} required onChange={(e) => handleIngredientInput(e)} onBlur={() => clearAutoComplete()} onFocus={(e) => handleIngredientInput(e)} autoComplete="off" placeholder='Ingredient'className="ingredient-text-box"/>
+                  {autoCompleteList == i && autoCompleteMenu()}
+                </span>
+              {(i != 0 || listOfInput.length > 1 )&& <div className= "remove-ingredient-button" onClick={e => removeIngredientField(e, i)}>X</div>}
+              </div>
+              </div>
             )
           }
         )

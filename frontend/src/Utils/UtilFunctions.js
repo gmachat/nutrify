@@ -49,11 +49,10 @@ export const displayRecipesInList = (recipeList) => {
     return (
         <div className={'recipe-list-item'} key={i} >
         <Link to={`/recipes/${recipe.id}`} className="recipe-link">
-          <div></div>
           <div className="recipe-thumbnail-frame">
             <img className='recipe-thumbnail' src={recipe.recipe_image? recipe.recipe_image : defaultImage} />
           </div>
-          <div>{recipe.title}</div>
+          <h3>{recipe.title}</h3>
         </Link>
         <div className="recipe-list-username"><div>By: <Link to={`/profiles/${recipe.created_by.user.id}`}>{recipe.created_by.user.username}</Link></div></div>
         <div className={'health-labels'}>{getMainHealthLabels(recipe)}</div>

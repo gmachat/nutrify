@@ -121,42 +121,40 @@ function RecipeFields({props}) {
 
   return (
     <form className="create-recipe-form" onSubmit={(e) => handleRecipeSubmit(e)} >
+      <h2>Show us what you got!</h2>
       {sendingData && <div className='sending-data'><Loader type="TailSpin" color="#26b421" height={80} width={80} /></div>}
       {submitError && (<div className="form-error danger">
                         <div className="close-box" onClick={() => setSubmitError(null)}>X</div>
                         <div>{submitError}</div>
                       </div>)}
       <div className='form-section'>
-        <label htmlFor={'title'}>Title</label>
-        <input type="text" data-formtype='title' name={'title'}></input >
+        <input type="text" data-formtype='title' placeholder="Name of recipe" name={'title'}></input >
       </div>
       <div className='form-section'>
-        <label htmlFor={'prep_time'}>Prep Time (Minutes)</label>
-        <input type="number" data-formtype='prep_time' name={'prep_time'}></input >
+        <input type="number" data-formtype='prep_time' placeholder='Prep Time' name={'prep_time'}></input >
       </div>
       <div className='form-section'>
-        <label htmlFor={'cook_time'}>Cook Time (Minutes)</label>
-        <input type="number" data-formtype='cook_time' name={'cook_time'}></input >
+        <input type="number" data-formtype='cook_time' placeholder="Cook time"name={'cook_time'}></input >
       </div>
       <div className='form-section'>
-        <label htmlFor={'yields'}>Number of Servings</label>
-        <input type='number' data-formtype='yields' name={'yields'}></input>
+        <input type='number' data-formtype='yields' placeholder="Number of Servings" name={'yields'}></input>
       </div>
       <div className="ingredients-list">
-      <div className='form-section'>
+      <div className='ingredient-wrapper'>
+        <div>Ingredients</div>
         <IngredientInputs removeIngredientField={removeIngredientField} handleIngredientInput={handleIngredientInput} listOfInput={ingredientForms} autoCompleteList={autoCompleteList} autoComplete={autoComplete} setAutoComplete={setAutoComplete} clearAutoComplete={clearAutoComplete}/>
         <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Another Ingredient</div>
       </div>
       </div>
       <div className='form-section'>
-        <label htmlFor={'preperation'}>Preperation</label>
+        {/* <label htmlFor={'preperation'}>Preperation</label> */}
         <textarea name={'preperation'} data-formtype='preperation' placeholder="How do you prepare this dish?"></textarea>
       </div>
       <div className="form-section">
         <label htmlFor={'recipe_image'}>Choose image for recipe</label>
         <input type="file" data-formtype='recipe_image' name='recipe_image'/>
       </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="recipe-submit">Nutrify!</button>
       </form>
   )
 }
