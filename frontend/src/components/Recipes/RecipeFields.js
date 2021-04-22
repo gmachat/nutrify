@@ -70,7 +70,8 @@ function RecipeFields({props}) {
       return
     }
     console.log('storing data...')
-    if(data) recipeObj['recipe_image'] = data.location
+    if(data) recipeObj['recipe_image'] = data.location.replace(/\s+/g, '%20') 
+    console.log(recipeObj['recipe_image'])
     recipeObj['created_by'] = user.user.id
 
     const createdRecipe = await createNewRecipe(recipeObj)
@@ -143,7 +144,7 @@ function RecipeFields({props}) {
       <div className='ingredient-wrapper'>
         <div>Ingredients</div>
         <IngredientInputs removeIngredientField={removeIngredientField} handleIngredientInput={handleIngredientInput} listOfInput={ingredientForms} autoCompleteList={autoCompleteList} autoComplete={autoComplete} setAutoComplete={setAutoComplete} clearAutoComplete={clearAutoComplete}/>
-        <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Another Ingredient</div>
+        <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Ingredient</div>
       </div>
       </div>
       <div className='form-section'>
@@ -151,8 +152,7 @@ function RecipeFields({props}) {
         <textarea name={'preperation'} data-formtype='preperation' placeholder="How do you prepare this dish?"></textarea>
       </div>
       <div className="form-section">
-        <label htmlFor={'recipe_image'}>Choose image for recipe</label>
-        <input type="file" data-formtype='recipe_image' name='recipe_image'/>
+        <input type="file" data-formtype='recipe_image' name='recipe_image' className="file-upload-button"/>
       </div>
         <button type="submit" className="recipe-submit">Nutrify!</button>
       </form>

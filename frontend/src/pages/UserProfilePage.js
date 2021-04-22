@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import {displayRecipesInList} from '../Utils/UtilFunctions'
-import {getUserProfile} from '../api/RecipeApi'
+import {getUserProfile, getUsersRecipes} from '../api/RecipeApi'
 
 
 function UserProfilePage(props) {
@@ -24,6 +24,10 @@ function UserProfilePage(props) {
   useEffect(() => { 
     getUserProfileInfo()
   }, [])
+
+  useEffect(() => { 
+    getUsersRecipes()
+  }, [userProfile])
 
   return (
     <div className="main-grid">

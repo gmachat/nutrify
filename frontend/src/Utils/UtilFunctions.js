@@ -27,7 +27,7 @@ export const displayRecipesInList = (recipeList) => {
             healthLabels.push('Vegetarian')
             break
           case "KETO_FRIENDLY":
-            healthLabels.push('Keto Friendly')
+            healthLabels.push('Keto')
             break
           case "PALEO":
               healthLabels.push('Paleo')
@@ -42,20 +42,30 @@ export const displayRecipesInList = (recipeList) => {
     })
   
 
-    return healthLabels.map((el) => <div>{el}</div>)
+    return healthLabels.map((el) => <div className='health-label'>{el}</div>)
   }
-
+  console.log(recipeList.reverse())
+  console.log(recipeList)
   return recipeList.map((recipe, i ) => {
+    // const imageStyle = { backgroundImage: `url(${recipe.recipe_image ? recipe.recipe_image : defaultImage})` }
     return (
         <div className={'recipe-list-item'} key={i} >
-        <Link to={`/recipes/${recipe.id}`} className="recipe-link">
-          <div className="recipe-thumbnail-frame">
-            <img className='recipe-thumbnail' src={recipe.recipe_image? recipe.recipe_image : defaultImage} />
-          </div>
-          <h3>{recipe.title}</h3>
-        </Link>
-        <div className="recipe-list-username"><div>By: <Link to={`/profiles/${recipe.created_by.user.id}`}>{recipe.created_by.user.username}</Link></div></div>
-        <div className={'health-labels'}>{getMainHealthLabels(recipe)}</div>
+          {/* <div className="inner-recipe-container"> */}
+          <Link to={`/recipes/${recipe.id}`} className="recipe-link">
+            <div className="recipe-thumbnail-frame" style={{ backgroundImage: `url(${recipe.recipe_image ? recipe.recipe_image : defaultImage})` }}></div>
+            </Link>
+            <div className="recipe-title-link">
+              <Link to={`/recipes/${recipe.id}`} className="recipe-link-body">
+              <h4>{recipe.title}</h4>
+              </Link>
+              <div className="recipe-list-username">
+                  <div>Nutrified By:  
+                    <Link to={`/profiles/${recipe.created_by.user.id}`} className="username-link"> {recipe.created_by.user.username}</Link>
+                  </div>
+                </div>
+            </div>
+            {/* </div> */}
+            <div className={'health-labels'}>{getMainHealthLabels(recipe)}</div>
         </div>
     )
   })

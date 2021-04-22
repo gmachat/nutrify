@@ -12,10 +12,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-
+    # ISSUES CAUSED BY THIS ON MIGRATE FOR SOME REASON!!!
+    # created_by = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects.all())
+ 
+    # print(created_by)
     class Meta:
         model = Recipe
         fields = '__all__'
+        # exclude = ('created_by',)
     
     def get_fields(self):
         fields = super(RecipeSerializer, self).get_fields()
@@ -25,16 +29,18 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
-    created_recipes = RecipeSerializer(many=True, read_only=True)
+    # created_recipes = RecipeSerializer(many=True, source='created_by')
     created_recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = UserProfile
         fields = '__all__'
+        
 
     def get_fields(self):
         fields = super(UserProfileSerializer, self).get_fields()
         if self.context['request'].method == "GET":
             fields['user'] = UserSerializer(instance=True)
+            # fields['created_recipes'] = RecipeSerializer(instance=True, many=True)
         return fields
 
 class CommentSerializer(serializers.ModelSerializer):

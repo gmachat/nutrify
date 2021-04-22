@@ -25,13 +25,17 @@ function NutritionSideBar({recipe}) {
   return (
     <Fragment>
     <div className="toggle-display">Display: 
-      <span className={`toggle-nutrients ${nutrientOrDaily === 'totalNutrients' ? 'toggle-nutrients-on' : ""}`} onClick={() => toggleNutrients('totalNutrients')}>Total</span>
-      <span className={`toggle-nutrients ${nutrientOrDaily === 'totalDaily' ? 'toggle-nutrients-on' : ""}`} onClick={() => toggleNutrients('totalDaily')} >Daily</span>
+      <span className={`toggle-nutrients toggle-nutrients-total ${nutrientOrDaily === 'totalNutrients' && 'toggle-button-on'}`} onClick={() => toggleNutrients('totalNutrients')}>Total</span>
+      <span className={`toggle-nutrients toggle-nutrients-daily ${nutrientOrDaily === 'totalDaily' && 'toggle-button-on'}`} onClick={() => toggleNutrients('totalDaily')} >Daily</span>
     </div>
+    <div className={`nutritional-info  ${nutrientOrDaily == 'totalDaily' && 'nutritional-info-daily'}`}>
+      <div className="nutritional-info-top">
     <h3>Nutrition</h3>
     <div>Calories (Serving): {Math.floor(nutrition.calories / nutrition.yield)}</div>
-    <div className="nutrient-list">
+    </div>
+    <div className={`nutrient-list`}>
       {renderNutrients(recipe)}
+    </div>
     </div>
     <div>
 

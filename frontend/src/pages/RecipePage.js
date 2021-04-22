@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import defaultImage from '../resources/images/default_recipe_image.jpeg'
-import {getUserRecipeById} from '../api/RecipeApi'
+import {getUserRecipeById, getSingleIngredient} from '../api/RecipeApi'
 import {NutritionSideBar} from '../components/ComponentIndex'
 
 
 function RecipePage(props) {
   const [recipe, setRecipe] = useState(null)
-
+  const [selectedIngredient, setSelectedIngredient] = useState(null)
 
   const recipeId = props.match.params.recipeId
 
@@ -23,6 +23,7 @@ function RecipePage(props) {
   const renderIngredients = () => {
     if(recipe && recipe.ingredients){
       return recipe.ingredients.map((ing, i) => {
+        
         return <div key={`ingredient-${i}`}>{ing}</div>
       })
     }
@@ -34,7 +35,7 @@ function RecipePage(props) {
 
   return (
     <div className="main-grid">
-      <div className="left-sidebar">
+      <div className="left-sidebar recipepage-left-sidebar">
         <NutritionSideBar recipe={recipe} />
       </div>
       <div className="main-column-top">
@@ -53,7 +54,7 @@ function RecipePage(props) {
         </div>
         </div>
       </div>
-      <div className="main-column-bottom">
+      <div className="main-column-bottom recipepage-bottom">
         <h2>Ingredients</h2>
         <div className="recipe-ingredient-list">
           {renderIngredients()}

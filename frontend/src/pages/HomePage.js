@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 import {displayRecipesInList} from '../Utils/UtilFunctions'
 import {getUserRecipes} from '../api/RecipeApi'
-
+import Dashboard from '../components/Dashboard'
 
 function HomePage() {
   const [recipes, setRecipes] = useState(null)
@@ -30,11 +30,13 @@ function HomePage() {
         Nutrition News
       </div>
       <div className="main-column-top">
-        <div>Your Dashboard</div>
+        <Dashboard />
       </div>
       <div className="main-column-bottom homepage-bottom">
-        <h2>Recent Recipes</h2>
+        <h2 className="recipe-list-title">Recent Recipes</h2>
+        <div className="main-recipe-list">
         {recipeList}
+        </div>
       </div>
       <div className="right-sidebar">
         Shortcuts

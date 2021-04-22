@@ -85,8 +85,14 @@ const recipeAutoComplete = async (text) => {
   return items
 }
 
+//-------------------------get single ingredient nutrition-------------------//
 
-
+const getSingleIngredient = async (text) => {
+  let item = await fetch(`https://api.edamam.com/api/food-database/v2/parser?ingr=${text}app_id=c26c70bc&app_key=dbb9c375f759b09c477b07f9b5b2ff23`)
+  item = await item.json()
+  console.log('inapi', item)
+  return item
+}
 
 
 //-------------------------DATABASE CALLS--------------------------------------//
@@ -95,6 +101,7 @@ const getUserRecipes = async () => {
   console.log('firing userrecipe func')
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/`)
   recipes = await recipes.json()
+  recipes.reverse()
   return recipes
 }
 
@@ -123,4 +130,8 @@ const getUserProfile = async (userId) => {
   return profile
 }
 
-export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete}
+const getUsersRecipes = (recipeList) => {
+  
+}
+
+export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersRecipes, getSingleIngredient}
