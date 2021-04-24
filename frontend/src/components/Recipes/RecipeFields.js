@@ -1,9 +1,11 @@
-import React, {Fragment, useContext, useState} from 'react'
+import React, {Fragment, useContext, useState, useCallback} from 'react'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import S3FileUpload from 'react-s3'
 import Loader from "react-loader-spinner";
-import {UserContext} from '../../App'
+import {debounce} from 'lodash'
 
+
+import {UserContext} from '../../App'
 import {createNewRecipe, getRecipeAnalysis, recipeAutoComplete} from '../../api/RecipeApi'
 import IngredientInputs from './IngredientInputs'
 import { formatRecipeForAnalysis} from '../../Utils/UtilFunctions'
@@ -81,13 +83,14 @@ function RecipeFields({props}) {
   }
 
   const autoCompleteGrabber = async (input) =>{
-    console.log(input.target.dataset.inputnumber)
     const autoCompleteData = await recipeAutoComplete(input.target.value)
-    console.log(autoCompleteData)
+    console.log('inautocomplete')
     setAutoCompleteList(input.target.dataset.inputnumber)
     setAutoComplete(autoCompleteData)
     return autoCompleteData
   }
+
+  const delayedSearch = useCallback(debounce(event => autoCompleteGrabber(event), 500),[])
 
   const handleIngredientInput = (e) => {
     console.log(e)
@@ -95,7 +98,7 @@ function RecipeFields({props}) {
     const updateForms = [...ingredientForms]
     const newForm = {...updateForms[number]}
     newForm[name] = e.target.value
-    autoCompleteGrabber(e)
+    delayedSearch(e)
     updateForms[number] = newForm
     setIngredientForms(updateForms)
   }

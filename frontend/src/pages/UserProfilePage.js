@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import {displayRecipesInList} from '../Utils/UtilFunctions'
-import {getUserProfile, getUsersRecipes} from '../api/RecipeApi'
+import {getUserProfile, getUsersCreatedRecipes} from '../api/RecipeApi'
 
 
 function UserProfilePage(props) {
@@ -26,7 +26,7 @@ function UserProfilePage(props) {
   }, [])
 
   useEffect(() => { 
-    getUsersRecipes()
+    getUsersCreatedRecipes()
   }, [userProfile])
 
   return (

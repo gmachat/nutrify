@@ -1,12 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 
-import {displayRecipesInList} from '../Utils/UtilFunctions'
 import {getUserRecipes} from '../api/RecipeApi'
-import Dashboard from '../components/Dashboard'
+import {Dashboard, DisplayRecipeList }from '../components/ComponentIndex'
 
 function HomePage() {
   const [recipes, setRecipes] = useState(null)
-  let recipeList
 
 
   const getNewRecipes = async () => {
@@ -15,10 +13,7 @@ function HomePage() {
     return newRecipes
   }
 
-  
-  if(recipes) {
-   recipeList = displayRecipesInList(recipes)
-  }
+
 
   useEffect(() => { 
     getNewRecipes()
@@ -35,7 +30,7 @@ function HomePage() {
       <div className="main-column-bottom homepage-bottom">
         <h2 className="recipe-list-title">Recent Recipes</h2>
         <div className="main-recipe-list">
-        {recipeList}
+        <DisplayRecipeList recipeList={recipes} startLimit={10} allowLoadMore={true}/>
         </div>
       </div>
       <div className="right-sidebar">

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import defaultImage from '../resources/images/default_recipe_image.jpeg'
-import {getUserRecipeById, getSingleIngredient} from '../api/RecipeApi'
-import {NutritionSideBar} from '../components/ComponentIndex'
+import {getUserRecipeById, getSingleIngredient, getUserRecipes} from '../api/RecipeApi'
+import {DisplayRecipeList, NutritionSideBar} from '../components/ComponentIndex'
 
 
 function RecipePage(props) {
   const [recipe, setRecipe] = useState(null)
+  const [similiarRecipes, setSimiliarRecipes] = useState(null)
   const [selectedIngredient, setSelectedIngredient] = useState(null)
 
   const recipeId = props.match.params.recipeId
@@ -15,9 +16,15 @@ function RecipePage(props) {
     setRecipe(recipe)
   } 
 
+  const getRelatedRecipes = async () => {
+    let recipeRes = await getUserRecipes()
+    setSimiliarRecipes(recipeRes)
+  }
+
 
   useEffect(() => {
     getRecipe()
+    getRelatedRecipes()
   }, [])
 
   const renderIngredients = () => {
@@ -32,7 +39,7 @@ function RecipePage(props) {
   if(!recipe || recipe.detail === "Not found."){
     return <div>Recipe Not Found</div>
   }
-
+  console.log(similiarRecipes)
   return (
     <div className="main-grid">
       <div className="left-sidebar recipepage-left-sidebar">
@@ -42,7 +49,7 @@ function RecipePage(props) {
         <div className="recipe-main-info">
         <div className="recipe-main-info-left" >
         <h2 className="main-header recipe-header">{recipe?.title}</h2>
-        <div className="creator-name">by: {recipe.created_by.user.username}</div>
+        <div className="creator-name">by: {recipe?.created_by?.user?.username}</div>
         <div className="recipe-subinfo">
           <div>Prep Time: {recipe?.prep_time} minutes</div>
           <div>Cook Time: {recipe?.cook_time} minutes</div>
@@ -54,7 +61,8 @@ function RecipePage(props) {
         </div>
         </div>
       </div>
-      <div className="main-column-bottom recipepage-bottom">
+      <div className="main-column-bottom">
+        <div className=" recipepage-bottom">
         <h2>Ingredients</h2>
         <div className="recipe-ingredient-list">
           {renderIngredients()}
@@ -63,6 +71,15 @@ function RecipePage(props) {
           <h2>Preperation</h2>
           {recipe.preperation ? recipe.preperation : <div>User did not provide preperation steps </div>}
         </div>
+       </div>
+
+       <div className="recipepage-bottom related-recipe">
+        <h2>Other recipes to try</h2>
+        <div className="main-recipe-list">
+       {similiarRecipes && <DisplayRecipeList recipeList={similiarRecipes} startLimit={4}/>}
+
+       </div>
+       </div>
       </div>
       <div className="right-sidebar">
       </div>

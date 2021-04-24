@@ -9,20 +9,19 @@ const Login = ({isLoggedIn, handleLogin}) => {
   }
 
   return (
-    <div>
-    <h1>Login Page</h1>
-      <form onSubmit={handleLogin}>
-        <label>UserName:</label>
-        <input type='text' placeholder='' name='username' />
-        <label>Password:</label>
-        <input type='password' name='password' />
-        <button type='submit' >Submit</button>
-      </form>
-      <div>
-        <Link to='/'>Home</Link>
-      </div>
-      <div>
-        <Link to='/signup'>Signup</Link>
+    <div className="main-grid">
+      <div className="interface-container">
+        <div className="interface-box">
+          <h1 className="interface-box-title">Login</h1>
+          <form className="interface-form" onSubmit={handleLogin}>
+            <input type='text' placeholder='Username' name='username' />
+            <input type='password' placeholder='Password' name='password' />
+            <button type='submit' >Login</button>
+          </form>
+          <div>
+          New Here? <Link to='/signup' className="mid-sentence-link">Signup</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

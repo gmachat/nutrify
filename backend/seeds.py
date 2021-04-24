@@ -1,4 +1,4 @@
-from nutrify.models import Recipe, Rating, Comment, UserProfile
+from nutrify.models import Recipe, Rating, Comment, UserProfile, UserRecipe
 from django.contrib.auth.models import User
 
 ingredients1 = [

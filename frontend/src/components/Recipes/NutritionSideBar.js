@@ -12,8 +12,8 @@ function NutritionSideBar({recipe}) {
     const nutritionObj = recipe.nutrition[nutrientOrDaily]
     //divide by servings
     return Object.values(nutritionObj).map((nutrient, i) => {
-      return (<div key={`${nutrient.label}-${i}`}>
-        {nutrient.label} : {Math.floor(nutrient.quantity / recipe.yields)}{nutrient.unit}
+      return (<div key={`${nutrient.label}-${i}`} className={'nutrient-in-list'}>
+        <span style={{fontWeight: 'bold'}}>{nutrient.label}</span> : {Math.floor(nutrient.quantity / recipe.yields)}{nutrient.unit}
       </div>
       )
     })
@@ -31,7 +31,7 @@ function NutritionSideBar({recipe}) {
     <div className={`nutritional-info  ${nutrientOrDaily == 'totalDaily' && 'nutritional-info-daily'}`}>
       <div className="nutritional-info-top">
     <h3>Nutrition</h3>
-    <div>Calories (Serving): {Math.floor(nutrition.calories / nutrition.yield)}</div>
+    <div><span style={{fontWeight: "bold"}}>Calories</span> (Serving): {Math.floor(nutrition.calories / nutrition.yield)}</div>
     </div>
     <div className={`nutrient-list`}>
       {renderNutrients(recipe)}

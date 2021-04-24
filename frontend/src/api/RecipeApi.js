@@ -79,11 +79,20 @@ const getRecipesByParams = async () => {
 
 // 
 const recipeAutoComplete = async (text) => {
-  let items = await fetch(`http://api.edamam.com/auto-complete?q=${text}&limit=10&app_id=${FOOD_DB_APP_ID}&app_key=${FOOD_DB_APP_KEY}`)
+  let items = await fetch(`https://api.edamam.com/auto-complete?q=${text}&limit=10&app_id=${FOOD_DB_APP_ID}&app_key=${FOOD_DB_APP_KEY}`, {
+  method: 'GET',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  }
+}
+)
   items = await items.json()
-  console.log('inapi', items)
+  console.log('inapicall', items)
   return items
 }
+
+
 
 //-------------------------get single ingredient nutrition-------------------//
 
@@ -130,8 +139,8 @@ const getUserProfile = async (userId) => {
   return profile
 }
 
-const getUsersRecipes = (recipeList) => {
+const getUsersCreatedRecipes = (recipeList) => {
   
 }
 
-export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersRecipes, getSingleIngredient}
+export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient}

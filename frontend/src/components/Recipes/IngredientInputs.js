@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from 'react'
 
 function IngredientInputs({removeIngredientField, handleIngredientInput, listOfInput, autoCompleteList, autoComplete, setAutoComplete, clearAutoComplete}) {
-  console.log(autoComplete)
-  console.log(autoCompleteList)
 
   // const autoCompleteMenu = <div>heres</div>
 
