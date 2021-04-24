@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 
 // require('dotenv').config()
 import { getLoggedInUser, login } from './api/UserAPI';
@@ -72,7 +72,7 @@ function App() {
               <Route exact path="/login" render={renderLoginPage} />
               <Route exact path="/signup" component={SignupPage} />
               <Route exact path="/recipes/new/" component={CreateRecipePage} />
-              <Route exact path="/recipes/:recipeId/" component={RecipePage} />
+              <Route exact path="/recipes/:recipeId/" component={withRouter(RecipePage)} />
               <Route exact path="/profiles/:user_id/" component={UserProfilePage} />
               <Route component={NotFoundPage} />
             </Switch>

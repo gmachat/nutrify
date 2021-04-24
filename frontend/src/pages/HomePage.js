@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react'
 
 import {getUserRecipes} from '../api/RecipeApi'
+import {UserContext} from '../App'
 import {Dashboard, DisplayRecipeList }from '../components/ComponentIndex'
 
 function HomePage() {
   const [recipes, setRecipes] = useState(null)
+  const userInfo = useContext(UserContext)
 
 
   const getNewRecipes = async () => {
@@ -25,10 +27,10 @@ function HomePage() {
         Nutrition News
       </div>
       <div className="main-column-top">
-        <Dashboard />
+        <Dashboard userInfo={userInfo} />
       </div>
       <div className="main-column-bottom homepage-bottom">
-        <h2 className="recipe-list-title">Recent Recipes</h2>
+        <h2 className="recipe-list-title">Newest Recipes</h2>
         <div className="main-recipe-list">
         <DisplayRecipeList recipeList={recipes} startLimit={10} allowLoadMore={true}/>
         </div>

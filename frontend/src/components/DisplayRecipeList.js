@@ -57,7 +57,7 @@ function DisplayRecipeList({recipeList, startLimit, allowLoadMore=false}) {
                   <div>
                   <div className="recipe-list-username">
                       <div>Nutrified By:  
-                        <Link to={`/profiles/${recipe?.created_by?.user_profile?.id}`} className="username-link"> {}</Link>
+                        <Link to={`/profiles/${recipe?.created_by?.user?.id}`} className="username-link"> {recipe?.created_by?.user.username}</Link>
                       </div>
                     </div>
                     </div>

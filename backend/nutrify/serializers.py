@@ -7,37 +7,61 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username']
+        # fields = ['id', 'username']
+        exclude = ('password', 'user_permissions', 'is_superuser',  'first_name', 'groups', 'is_active', 'is_staff', 'last_login', 'last_name')
+
+
 
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     # ISSUES CAUSED BY THIS ON MIGRATE FOR SOME REASON!!!
-    # created_by = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects.all())
+    created_by = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects.all())
  
     # print(created_by)
     class Meta:
         model = Recipe
         fields = '__all__'
+        depth =2
+        
         # exclude = ('created_by',)
     
     def get_fields(self):
         fields = super(RecipeSerializer, self).get_fields()
         if self.context['request'].method == "GET":
-            fields['created_by'] = UserProfileSerializer(instance=True)
+            fields['created_by'] = RecipeUserProfileSerializer(instance=True)
         return fields
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
-    # created_recipes = RecipeSerializer(many=True, source='created_by')
-    created_recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    created_recipes = RecipeSerializer(many=True)
+    # created_recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = UserProfile
         fields = '__all__'
+        depth = 1
         
 
     def get_fields(self):
         fields = super(UserProfileSerializer, self).get_fields()
+        if self.context['request'].method == "GET":
+            fields['user'] = UserSerializer(instance=True)
+            # fields['created_recipes'] = RecipeSerializer(instance=True, many=True)
+        return fields
+
+
+class RecipeUserProfileSerializer(serializers.ModelSerializer):
+
+    # created_recipes = RecipeSerializer(many=True)
+    # created_recipes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = UserProfile
+        fields = ['user']
+        depth = 1
+        
+
+    def get_fields(self):
+        fields = super(RecipeUserProfileSerializer, self).get_fields()
         if self.context['request'].method == "GET":
             fields['user'] = UserSerializer(instance=True)
             # fields['created_recipes'] = RecipeSerializer(instance=True, many=True)

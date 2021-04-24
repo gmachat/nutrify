@@ -17,6 +17,9 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
 
 
+
+
+
 def home(request):
     pass
 
@@ -38,7 +41,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = (AllowAny,)
-
+    
 
 # def get_recipes(request):
 #     pass

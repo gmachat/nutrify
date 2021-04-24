@@ -2,17 +2,32 @@ import React, {useEffect, useState} from 'react'
 import defaultImage from '../resources/images/default_recipe_image.jpeg'
 import {getUserRecipeById, getSingleIngredient, getUserRecipes} from '../api/RecipeApi'
 import {DisplayRecipeList, NutritionSideBar} from '../components/ComponentIndex'
+import QRCode from 'qrcode'
 
 
 function RecipePage(props) {
   const [recipe, setRecipe] = useState(null)
   const [similiarRecipes, setSimiliarRecipes] = useState(null)
   const [selectedIngredient, setSelectedIngredient] = useState(null)
+  const [recipeCode, setRecipeCode] = useState(null)
 
-  const recipeId = props.match.params.recipeId
+  const getCode = async () => {
+    let code
+    try {
+      code = await QRCode.toDataURL(window.location.href)
+      console.log(code)
+    } catch (err) {
+      console.error(err)
+    }
+    setRecipeCode(code)
+    return code
+  }
+  useEffect(() => {
+    getCode()
+  },[props.match.params.recipeId])
 
   const getRecipe = async () => {
-    let recipe = await getUserRecipeById(recipeId)
+    let recipe = await getUserRecipeById(props.match.params.recipeId)
     setRecipe(recipe)
   } 
 
@@ -25,7 +40,7 @@ function RecipePage(props) {
   useEffect(() => {
     getRecipe()
     getRelatedRecipes()
-  }, [])
+  }, [props.match.params.recipeId])
 
   const renderIngredients = () => {
     if(recipe && recipe.ingredients){
@@ -81,7 +96,13 @@ function RecipePage(props) {
        </div>
        </div>
       </div>
-      <div className="right-sidebar">
+      <div className="right-sidebar recipepage-right-sidebar">
+        <div className='qr-section-containter'>
+        <h3>Get recipe on your phone!</h3>
+        <div>
+          {recipeCode && <img src={recipeCode} className="qr-code"/>}
+        </div>
+        </div>
       </div>
     </div>
   )

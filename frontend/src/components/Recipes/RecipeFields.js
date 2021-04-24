@@ -2,7 +2,6 @@ import React, {Fragment, useContext, useState, useCallback} from 'react'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import S3FileUpload from 'react-s3'
 import Loader from "react-loader-spinner";
-import {debounce} from 'lodash'
 
 
 import {UserContext} from '../../App'
@@ -16,8 +15,6 @@ function RecipeFields({props}) {
   const [ingredientForms, setIngredientForms] = useState([{'quantity': '', 'measurement': '', 'ingredient': ''}])
   const [submitError, setSubmitError] = useState(null)
   const [sendingData, setSendingData] = useState(false)
-  const [autoComplete, setAutoComplete] = useState('')
-  const [autoCompleteList, setAutoCompleteList] = useState(null)
 
   const user = useContext(UserContext)
   console.log(user)
@@ -82,32 +79,10 @@ function RecipeFields({props}) {
     props.history.push(`/recipes/${createdRecipe.id}`)
   }
 
-  const autoCompleteGrabber = async (input) =>{
-    const autoCompleteData = await recipeAutoComplete(input.target.value)
-    console.log('inautocomplete')
-    setAutoCompleteList(input.target.dataset.inputnumber)
-    setAutoComplete(autoCompleteData)
-    return autoCompleteData
-  }
 
-  const delayedSearch = useCallback(debounce(event => autoCompleteGrabber(event), 500),[])
 
-  const handleIngredientInput = (e) => {
-    console.log(e)
-    const [name, number] = e.target.name.split('-')
-    const updateForms = [...ingredientForms]
-    const newForm = {...updateForms[number]}
-    newForm[name] = e.target.value
-    delayedSearch(e)
-    updateForms[number] = newForm
-    setIngredientForms(updateForms)
-  }
+ 
 
-  const clearAutoComplete = () => {
-    setTimeout(() => {
-      setAutoComplete(null)
-    }, 300)
-  }
 
 
   const addIngredientField = () => {
@@ -146,7 +121,7 @@ function RecipeFields({props}) {
       <div className="ingredients-list">
       <div className='ingredient-wrapper'>
         <div>Ingredients</div>
-        <IngredientInputs removeIngredientField={removeIngredientField} handleIngredientInput={handleIngredientInput} listOfInput={ingredientForms} autoCompleteList={autoCompleteList} autoComplete={autoComplete} setAutoComplete={setAutoComplete} clearAutoComplete={clearAutoComplete}/>
+        <IngredientInputs removeIngredientField={removeIngredientField} setIngredientForms={setIngredientForms} ingredientForms={ingredientForms}  />
         <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Ingredient</div>
       </div>
       </div>
