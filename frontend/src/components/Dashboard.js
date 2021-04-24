@@ -1,11 +1,9 @@
 import React from 'react'
 
+import { handleRecipeSearch} from '../Utils/UtilFunctions'
+import SearchBar from './SearchBar'
 
-function Dashboard({userInfo}) {
-
-  const handleRecipeSearch = (e) => {
-    
-  }
+function Dashboard({userInfo, setRecipes, setActiveSearch}) {
 
 
 
@@ -16,8 +14,7 @@ function Dashboard({userInfo}) {
       <div className="dashboard-inner" >
       <h3>Welcome {userInfo?.user?.username}</h3>
       <div className="recipe-search-home-container">
-        <button ocClick={(e) => handleRecipeSearch(e)}>Search</button>
-        <input type="text" placeholder="Search Recipes" className="recipe-search-home" />
+        <SearchBar setRecipes={setRecipes} setActiveSearch={setActiveSearch} />
       </div>
       </div>
     </div>

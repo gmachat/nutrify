@@ -208,6 +208,8 @@ grid-template-rows: auto auto;
 .recipe-header{
   text-align: center;
   vertical-align: middle;
+  text-transform: capitalize;
+
 }
 
 .creator-name{
@@ -291,6 +293,7 @@ color: var(--secondary-color);
   justify-content: center;
   align-items: center;
   height: fit-content;
+  text-transform: capitalize;
 
 }
 

@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState, useCallback} from 'react'
+import React, {Fragment, useContext, useState, useCallback, useEffect} from 'react'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import S3FileUpload from 'react-s3'
 import Loader from "react-loader-spinner";
@@ -15,6 +15,7 @@ function RecipeFields({props}) {
   const [ingredientForms, setIngredientForms] = useState([{'quantity': '', 'measurement': '', 'ingredient': ''}])
   const [submitError, setSubmitError] = useState(null)
   const [sendingData, setSendingData] = useState(false)
+  const [attempt, setAttempt] = useState(0)
 
   const user = useContext(UserContext)
   console.log(user)
@@ -40,6 +41,10 @@ function RecipeFields({props}) {
         recipeImage = field.files[0]
       }else if(!field.name){
         continue
+      }else if(field.dataset.formtype === 'title'){
+        const title = field.value.toLowerCase()
+        console.log(title)
+        recipeObj['title'] = title
       }else{
         if(field.value) recipeObj[field.name] = field.value
       }
@@ -49,6 +54,12 @@ function RecipeFields({props}) {
     setSendingData(true)
     try{
     const nutritionAnalysis= await getRecipeAnalysis(formatRecipeForAnalysis(recipeObj))
+    if(nutritionAnalysis?.error && attempt == 0){
+      setSubmitError("Could not retrieve recipe nutrition,  ensure you have filled out fields correctly.  If you want to submit without nutrition, resubmit your recipe")
+      setAttempt(attempt+ 1)
+      setSendingData(false)
+      return
+    }
     recipeObj['nutrition'] = nutritionAnalysis
     }catch(err){
       setSendingData(false)
@@ -96,6 +107,9 @@ function RecipeFields({props}) {
     setIngredientForms(updateForms)}
   }
 
+  useEffect(() => {
+    setAttempt(0)
+  }, [ingredientForms])
 
 
   return (

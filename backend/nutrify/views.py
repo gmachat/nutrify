@@ -42,7 +42,17 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
     permission_classes = (AllowAny,)
     
+    def get_queryset(self):
+        print(self.request.query_params)
+        print(self.request.data)
 
+        search = self.request.query_params.get('search',False)
+        print(search, 'search')
+        if search:
+            recipes = Recipe.objects.filter(title__contains=search)
+        else:
+            recipes = Recipe.objects.all()
+        return recipes
 # def get_recipes(request):
 #     pass
 

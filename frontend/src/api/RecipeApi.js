@@ -139,8 +139,19 @@ const getUserProfile = async (userId) => {
   return profile
 }
 
-const getUsersCreatedRecipes = (recipeList) => {
-  
+const getUsersCreatedRecipes = async (recipeList) => {
+  let recipes = await fetch(`${BASE_URL}nutrify/recipes/`)
+  recipes = await recipes.json()
+  recipes.reverse()
+  return recipes
 }
 
-export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient}
+const getRecipeBySearchParams = async (keyword) => {
+  let recipes = await fetch(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}`)
+  recipes = await recipes.json()
+  recipes.reverse()
+  return recipes
+}
+
+
+export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient, getRecipeBySearchParams}

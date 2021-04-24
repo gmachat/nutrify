@@ -24,6 +24,7 @@ urlpatterns = [
 
 router = DefaultRouter()
 router.register(r'recipes', views.RecipeViewSet, basename='recipe')
+# router.register(r'^recipes/?search=(?P<searchterm>.+)/$', views.RecipeViewSet, basename='recipe-search')
 router.register(r'comments', views.CommentViewSet, basename='comment')
 router.register(r'ratings', views.RatingViewSet, basename='rating')
 router.register(r'profiles', views.UserProfileViewSet, basename='profile')
