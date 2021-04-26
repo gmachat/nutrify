@@ -131,6 +131,16 @@ const createNewRecipe = async (recipeObj) => {
   return recipe
 }
 
+const updateRecipe = async (recipeObj, recipe_id) => {
+  let recipe = await fetch(`${BASE_URL}nutrify/recipes/${recipe_id}/`, {
+    headers: {"Content-Type": "application/json"},
+    method: "PATCH",
+    body: JSON.stringify(recipeObj)
+  })
+  recipe = await recipe.json()
+  return recipe
+}
+
 const getUserProfile = async (userId) => {
   console.log('firing get recipebyuserid func for ', userId)
   let profile = await fetch(`${BASE_URL}nutrify/profiles/${userId}/`)
@@ -154,4 +164,4 @@ const getRecipeBySearchParams = async (keyword) => {
 }
 
 
-export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient, getRecipeBySearchParams}
+export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient, getRecipeBySearchParams, updateRecipe}

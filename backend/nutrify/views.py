@@ -38,7 +38,7 @@ def home(request):
 # --------------recipes-------------------
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    queryset = Recipe.objects.all()
+    # queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = (AllowAny,)
     
@@ -47,10 +47,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         print(self.request.data)
 
         search = self.request.query_params.get('search',False)
-        print(search, 'search')
         if search:
+            print(search, 'search')
             recipes = Recipe.objects.filter(title__contains=search)
         else:
+            print('all obj')
             recipes = Recipe.objects.all()
         return recipes
 # def get_recipes(request):

@@ -1,7 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
+
 import defaultImage from '../resources/images/default_recipe_image.jpeg'
+import {UserContext} from '../App'
 import {getUserRecipeById, getSingleIngredient, getUserRecipes} from '../api/RecipeApi'
-import {DisplayRecipeList, NutritionSideBar} from '../components/ComponentIndex'
+import {DisplayRecipeList, NutritionSideBar, NutritionFacts} from '../components/ComponentIndex'
 import QRCode from 'qrcode'
 
 
@@ -11,6 +14,8 @@ function RecipePage(props) {
   const [selectedIngredient, setSelectedIngredient] = useState(null)
   const [recipeCode, setRecipeCode] = useState(null)
 
+  const userInfo = useContext(UserContext)
+  console.log(userInfo)
   const getCode = async () => {
     let code
     try {
@@ -57,14 +62,12 @@ function RecipePage(props) {
   console.log(similiarRecipes)
   return (
     <div className="main-grid">
-      <div className="left-sidebar recipepage-left-sidebar">
         <NutritionSideBar recipe={recipe} />
-      </div>
       <div className="main-column-top">
         <div className="recipe-main-info">
         <div className="recipe-main-info-left" >
         <h2 className="main-header recipe-header">{recipe?.title}</h2>
-        <div className="creator-name">by: {recipe?.created_by?.user?.username}</div>
+        <div className="creator-name"><Link to={`/profiles/${recipe?.created_by?.user?.id}`}>by: {recipe?.created_by?.user?.username} </Link>{recipe?.created_by?.user?.id == userInfo?.user?.id && <span style={{color: 'var(--primary-color)'}}>(<Link to={`/recipes/${recipe.id}/edit`} className={"mid-sentence-link-secondary"}>Edit</Link>)</span>}</div>
         <div className="recipe-subinfo">
           <div>Prep Time: {recipe?.prep_time} minutes</div>
           <div>Cook Time: {recipe?.cook_time} minutes</div>
@@ -102,6 +105,9 @@ function RecipePage(props) {
         <div>
           {recipeCode && <img src={recipeCode} className="qr-code"/>}
         </div>
+        </div>
+        <div>
+          <NutritionFacts props={{...props, recipe}} />
         </div>
       </div>
     </div>

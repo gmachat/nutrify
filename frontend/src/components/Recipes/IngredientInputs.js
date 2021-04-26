@@ -35,6 +35,7 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
     }
     console.log(mockEvent)
     handleIngredientInput(mockEvent)
+    setAutoCompleteList(null)
     clearAutoComplete()
   }
 
@@ -55,6 +56,12 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
     const updateForms = [...ingredientForms]
     const newForm = {...updateForms[number]}
     console.log(newForm[name])
+    if(name == 'quantity'){
+      console.log('quantitycheck')
+      console.log(/^([1-9]{0,2})?(\s)?([1-9]{1}\/)?([2,3,4,8])?$/.test(e.target.value))
+      //check to make usre number is integer or valid fraction
+      if(!/^([1-9]{0,2})?(\s)?([1-9]{1})?(\/)?([2,3,4,8])?$/.test(e.target.value) && e.target.value != "") return 
+    }
     newForm[name] = e.target.value
     if(e.target.value !== autoCompleteRef.current) {
     delayedSearch(e)
@@ -97,7 +104,7 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
           return (
             <div className='ingredient-form-section' key={`ingredient-${i}`}>
               <span>
-              <input type='number' data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)} className="quantity" placeholder='Quantity'/>
+              <input type='text' data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)} className="quantity" placeholder='Quantity'/>
               </span>
               <span>
               {/* <label htmlFor={`measurement-${i}`}>Measurement</label> */}

@@ -1,0 +1,125 @@
+.nutritionfacts-container{
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 1em 0px;
+margin:1em 0px;
+background-color: var(--secondary-color);
+
+box-sizing: border-box;
+border: 5px var(--secondary-color-fade) solid;
+border-radius: 10px;
+padding: 1em;
+color: white;
+height: fit-content;
+box-shadow: 2px 2px 3px var(--secondary-color);
+}
+
+.nutritionfacts-container-serving{
+  background-color: var(--secondary-color-fade);
+  border: 5px var(--secondary-color) solid;
+
+}
+
+#nutritionfacts { 
+  background-color:white; 
+  border:1px solid black; 
+  padding:3px; width:244px; 
+  border-radius: 5px;
+  border: 5px var(--secondary-color) solid;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 2px 2px 3px var(--secondary-color);
+}
+#nutritionfacts td { 
+  color:black; 
+  font-family:'Arial Black','Helvetica Bold',sans-serif; 
+  font-size:8pt; 
+  padding:0; 
+}
+#nutritionfacts td.header { 
+  font-family:'Arial Black','Helvetica Bold',sans-serif; 
+  font-size:28px; 
+  white-space:nowrap; 
+}        
+#nutritionfacts div.label { 
+  float:left; 
+  font-family:'Arial Black','Helvetica Bold',sans-serif; 
+
+}
+#nutritionfacts div.serving { 
+  font-family:Arial,Helvetica,sans-serif; 
+  font-size:8pt; 
+  text-align:center; 
+}
+#nutritionfacts div.weight { 
+  display:inline; 
+  font-family:Arial,Helvetica,sans-serif; 
+  padding-left:1px; 
+}
+#nutritionfacts div.dv { 
+  display:inline; 
+  float:right; 
+  font-family:'Arial Black','Helvetica Bold',sans-serif; 
+}
+#nutritionfacts table.vitamins td {  
+  font-family:Arial,Helvetica,sans-serif; 
+  white-space:nowrap; 
+  width:33%; 
+}
+#nutritionfacts div.line { 
+  border-top:1px solid black; 
+}
+#nutritionfacts div.labellight { 
+  float:left; 
+  font-family:Arial,Helvetica,sans-serif; 
+  padding: .2em
+}
+#nutritionfacts .highlighted {
+  border:1px dotted grey;
+  padding:2px;
+}
+
+
+.toggle-serving-display{
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: .5em;
+}
+
+.toggle-serving-type{
+box-sizing: border-box;
+height: 100%;
+display: flex;
+align-items: center;
+cursor: pointer;
+padding: 3px;
+}
+
+
+.toggle-nutrition-facts-total{
+  border: 3px outset var(--primary-color-fade);
+  background-color: var(--secondary-color);
+  color: white;
+  border-right-width: 0px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.toggle-nutrition-facts-serving{
+  border: 3px outset var(--primary-color-fade);
+  background-color: var(--secondary-color-fade);
+  color: var(--quaternary-color);
+  border-left-width: 0px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.toggle-button-on{
+  border-style:inset;
+  border-color: var(--secondary-color);
+
+}
