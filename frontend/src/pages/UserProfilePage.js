@@ -6,9 +6,7 @@ import {getUserProfile, getUsersCreatedRecipes} from '../api/RecipeApi'
 
 function UserProfilePage(props) {
   const [userProfile, setUserProfile] = useState(null)
-  // let recipeList
-  console.log(props.match.params.user_id)
-  console.log(userProfile)
+
 
   const getUserProfileInfo = async () => {
     const userProfileInfo = await getUserProfile(props.match.params.user_id)
@@ -17,8 +15,6 @@ function UserProfilePage(props) {
 
   const getJoinDate = () => {
     if(userProfile){
-    console.log(userProfile.user.date_joined)
-    // const joined = Date.parse(userProfile.user.date_joined)
     let joined = new Date(userProfile.user.date_joined)
     joined = String(joined).split(" ")
     joined[2] +=','

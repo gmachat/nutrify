@@ -1,7 +1,14 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import defaultImage from '../resources/images/default_recipe_image.jpeg'
+import {getMainHealthLabels} from '../Utils/UtilFunctions'
+
+
+
+
+
 import {getUserRecipes, getRecipeBySearchParams} from '../api/RecipeApi'
+
 
 
 
@@ -17,10 +24,11 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
       const getNewRecipes = async () => {
         let newRecipes;
         if(!profileRecipes){
-          console.log('no recipessssss')
             if(!searchTerms){
                 newRecipes = await getUserRecipes(paginationNumber)
-                if (!newRecipes.length) setEndOfResults(true)
+                console.log(newRecipes.length)
+
+                if (newRecipes.length == 0) setEndOfResults(true)
                 if(paginationNumber === 1){
                   setRecipeList(newRecipes)
                 }else{
@@ -28,7 +36,7 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
                 }
             }else{
                 newRecipes = await getRecipeBySearchParams(searchTerms, paginationNumber)
-                if (!newRecipes.length) setEndOfResults(true)
+                if (newRecipes.length == 0) setEndOfResults(true)
                 if(paginationNumber === 1){
                   setRecipeList(newRecipes)
                 }else{
@@ -48,6 +56,7 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
       const resetList = () => {
         setCurrentLimit(startLimit)
         setPaginationNumber(1)
+        setEndOfResults(false)
         getNewRecipes()
       }
 
@@ -57,8 +66,8 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
       }
 
       const viewMoreRecipes = () => {
-        setCurrentLimit(currentLimit + startLimit)
         setPaginationNumber(paginationNumber + 1)
+        setCurrentLimit(currentLimit + startLimit)
       }
 
 
@@ -67,44 +76,10 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
       }, [currentLimit, paginationNumber])
 
       useEffect(() => {
-        console.log('reset after search change')
         resetList()
       },[searchTerms])
 
-  console.log(recipeList)
 
-      const getMainHealthLabels = (recipe) => {
-         if(!recipe.nutrition) return
-          const healthLabels = []
-         
-    
-          recipe?.nutrition?.healthLabels?.map((label) => {
-            switch(label){
-              case "VEGETARIAN":
-                healthLabels.push('Vegetarian')
-                break
-              case "KETO_FRIENDLY":
-                healthLabels.push('Keto')
-                break
-              case "PALEO":
-                  healthLabels.push('Paleo')
-                break
-              case "GLUTEN_FREE":
-                healthLabels.push('Gluten Free')
-                break
-              case "VEGAN":
-                healthLabels.push('Vegan')
-                break
-            }
-        })
-        return healthLabels.map((el) => <div className='health-label'>{el}</div>)
-      }
-
-
-
-
-
-      console.log(endOfResults)
       if (recipeList){
       return (
         <Fragment>
@@ -139,19 +114,19 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
         )
       }
       )}
-      {allowLoadMore && endOfResults ? (
+      {allowLoadMore && 
+      (endOfResults ? (
       <div className="no-more-recipes">No More Recipes to Display!</div>
       )
       :
       (
       <div className="load-more-recipes"><button onClick={() => viewMoreRecipes()}>Load More Recipes</button></div>
-      )
-      }
+      ))}
 
       </Fragment>
       )
     }else{
-      return <div>No Recipes to dispaly</div>
+      return <div>No Recipes to display</div>
     }
     
 }

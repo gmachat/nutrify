@@ -7,7 +7,7 @@ function FullScreenConfirmation({props}) {
 
   const handleDeleteClick = async (e) => {
     e.preventDefault()
-    deleteRecipe(props.recipeId, localStorage.getItem("auth-user"))
+    deleteRecipe(props.recipeId)
     props.history.push(`/`)
   }
 

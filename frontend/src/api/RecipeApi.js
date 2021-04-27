@@ -60,14 +60,12 @@ const getFoodNutrients = async (foodObj) => {
 //---------------------------Fetch Recipes ------------------------------------
 
 const getRecipesByParams = async () => {
-  console.log('firing recipe func')
   const tempQuery = 'from=0&to=3&calories=591-722&health=alcohol-free'
   let recipes = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${RECIPE_APP_ID}&app_key=${RECIPE_APP_KEY}&${tempQuery}`, {
     headers: {"Content-Type": "application/json"},
     method: "GET"
   })
   recipes = await recipes.json()
-  console.log(recipes)
 }
 
 
@@ -88,7 +86,6 @@ const recipeAutoComplete = async (text) => {
 }
 )
   items = await items.json()
-  console.log('inapicall', items)
   return items
 }
 
@@ -99,7 +96,6 @@ const recipeAutoComplete = async (text) => {
 const getSingleIngredient = async (text) => {
   let item = await fetch(`https://api.edamam.com/api/food-database/v2/parser?ingr=${text}app_id=c26c70bc&app_key=dbb9c375f759b09c477b07f9b5b2ff23`)
   item = await item.json()
-  console.log('inapi', item)
   return item
 }
 
@@ -107,7 +103,6 @@ const getSingleIngredient = async (text) => {
 //-------------------------DATABASE CALLS--------------------------------------//
 
 const getUserRecipes = async (page=1) => {
-  console.log('firing userrecipe func')
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/?page=${page}`)
   recipes = await recipes.json()
   recipes.reverse()
@@ -133,7 +128,9 @@ const createNewRecipe = async (recipeObj) => {
 
 const updateRecipe = async (recipeObj, recipe_id) => {
   let recipe = await fetch(`${BASE_URL}nutrify/recipes/${recipe_id}/`, {
-    headers: {"Content-Type": "application/json"},
+    headers: {
+              "Content-Type": "application/json"
+                        },
     method: "PATCH",
     body: JSON.stringify(recipeObj)
   })
@@ -141,12 +138,10 @@ const updateRecipe = async (recipeObj, recipe_id) => {
   return recipe
 }
 
-const deleteRecipe = async (recipe_id, token) => {
-  console.log('deleteing recipe...')
+const deleteRecipe = async (recipe_id) => {
   let recipe = await fetch(`${BASE_URL}nutrify/recipes/${recipe_id}/`, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `JWT ${token}`
     },
     method: "DELETE"
   })
@@ -155,10 +150,8 @@ const deleteRecipe = async (recipe_id, token) => {
 }
 
 const getUserProfile = async (userId) => {
-  console.log('firing get recipebyuserid func for ', userId)
   let profile = await fetch(`${BASE_URL}nutrify/profiles/${userId}/`)
   profile = await profile.json()
-  console.log(profile)
   return profile
 }
 
@@ -170,7 +163,6 @@ const getUsersCreatedRecipes = async (page=1) => {
 }
 
 const getRecipeBySearchParams = async (keyword, page=1) => {
-  console.log(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}&page=${page}`)
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}&page=${page}`)
   recipes = await recipes.json()
   recipes.reverse()

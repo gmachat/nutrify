@@ -135,9 +135,11 @@ function RecipeFields({props}) {
       </div>
       <div className="ingredients-list">
       <div className='ingredient-wrapper'>
-        <div>Ingredients</div>
+        <div style={{textAlign:"center"}}>Ingredients</div>
         <IngredientInputs removeIngredientField={removeIngredientField} setIngredientForms={setIngredientForms} ingredientForms={ingredientForms}  />
+        <div className="add-ingredient-button-container">
         <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Ingredient</div>
+        </div>
       </div>
       </div>
       <div className='form-section'>

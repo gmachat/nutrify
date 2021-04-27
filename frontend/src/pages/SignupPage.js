@@ -44,7 +44,7 @@ const SignupPage = (props) => {
             <input type='password' placeholder="Confirm Password" name='password2' />
             <button type='submit' >Sign Up</button>
           </form>
-          <div className="secondary-backdrop text-section secondary-on-primary">
+          <div className="secondary-backdrop text-section secondary-on-primary" style={{textAlign: 'center'}}>
           Have an account? <Link to='/login' className="mid-sentence-link-secondary">Login</Link>
           </div>
         </div>

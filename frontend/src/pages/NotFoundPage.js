@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 
 function NotFoundPage(props) {
-  console.log(props)
   return (
     <div className="main-grid">
     <div className="interface-container">

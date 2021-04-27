@@ -23,7 +23,6 @@ function SearchBar({searchTerms, setSearchTerms}) {
   }
 
   useEffect(() => {
-    console.log('search change')
     setSearch(searchTerms)
   }, [searchTerms])
 

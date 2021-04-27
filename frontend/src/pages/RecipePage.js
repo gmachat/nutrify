@@ -7,6 +7,7 @@ import {getUserRecipeById, getSingleIngredient, getUserRecipes} from '../api/Rec
 import {DisplayRecipeList, NutritionSideBar, NutritionFacts, FullScreenConfirmation } from '../components/ComponentIndex'
 import QRCode from 'qrcode'
 import {NotFoundPage} from './PageIndex'
+import { getMainHealthLabels } from '../Utils/UtilFunctions'
 
 
 function RecipePage(props) {
@@ -18,12 +19,10 @@ function RecipePage(props) {
 
 
   const userInfo = useContext(UserContext)
-  console.log(userInfo)
   const getCode = async () => {
     let code
     try {
       code = await QRCode.toDataURL(window.location.href)
-      console.log(code)
     } catch (err) {
       console.error(err)
     }
@@ -57,19 +56,19 @@ function RecipePage(props) {
       })
     }
   }
-  console.log(recipe)
   if(!recipe || recipe.detail === "Not found."){
     return <div>Recipe Not Found</div>
   }
   return (
     <div className="main-grid">
-      {deleteWarning && <FullScreenConfirmation props={{...props, message: `Are you sure you want to delete ${recipe.title}"?`, setDeleteWarning, recipeId: recipe.id}}/>}
+      {deleteWarning && <FullScreenConfirmation props={{...props, userInfo, message: `Are you sure you want to delete ${recipe.title}"?`, setDeleteWarning, recipeId: recipe.id}}/>}
       <NutritionSideBar recipe={recipe} />
       <div className="main-column-top">
         <div className="recipe-main-info">
         <div className="recipe-main-info-left primary-backdrop primary-on-secondary" >
           <h2 className="main-header recipe-header secondary-backdrop secondary-on-primary">{recipe?.title}</h2>
-          <div className="recipe-subinfo secondary-backdrop text-section secondary-on-primary">
+          <div className='recipe-subinfo-wrapper  secondary-backdrop text-section secondary-on-primary'>
+          <div className="recipe-subinfo">
           <div className="creator-name">
           <div className={"creator-link"}>
             by:  
@@ -92,10 +91,15 @@ function RecipePage(props) {
             <div>Prep Time: {recipe?.prep_time} minutes</div>
             <div>Cook Time: {recipe?.cook_time} minutes</div>
             <div>Yields {recipe?.yields} servings</div>
+            <br />
+            
+            </div>
+            <div className="recipe-subinfo-labels">{getMainHealthLabels(recipe)}</div>
           </div>
         </div>
         <div className="recipe-main-info-right" >
           <img className="recipe-image" src={recipe?.recipe_image ? recipe.recipe_image : defaultImage} />
+
         </div>
         </div>
       </div>

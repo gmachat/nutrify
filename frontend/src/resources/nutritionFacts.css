@@ -25,12 +25,13 @@ box-shadow: 2px 2px 3px var(--secondary-color);
 #nutritionfacts { 
   background-color:white; 
   border:1px solid black; 
-  padding:3px; width:244px; 
+  padding:3px; 
   border-radius: 5px;
   border: 5px var(--secondary-color) solid;
   border-radius: 10px;
   color: white;
   box-shadow: 2px 2px 3px var(--secondary-color);
+  max-width: 244px;
 }
 #nutritionfacts td { 
   color:black; 
@@ -38,9 +39,9 @@ box-shadow: 2px 2px 3px var(--secondary-color);
   font-size:8pt; 
   padding:0; 
 }
-#nutritionfacts td.header { 
+#nutritionfacts td.nutrition-header { 
   font-family:'Arial Black','Helvetica Bold',sans-serif; 
-  font-size:28px; 
+  font-size:1.2em; 
   white-space:nowrap; 
 }        
 #nutritionfacts div.label { 
@@ -54,12 +55,12 @@ box-shadow: 2px 2px 3px var(--secondary-color);
   text-align:center; 
 }
 #nutritionfacts div.weight { 
-  display:inline; 
+  display:inline-flex; 
   font-family:Arial,Helvetica,sans-serif; 
   padding-left:1px; 
 }
 #nutritionfacts div.dv { 
-  display:inline; 
+  display:inline-flex; 
   float:right; 
   font-family:'Arial Black','Helvetica Bold',sans-serif; 
 }
@@ -68,7 +69,7 @@ box-shadow: 2px 2px 3px var(--secondary-color);
   white-space:nowrap; 
   width:33%; 
 }
-#nutritionfacts div.line { 
+#nutritionfacts div.line-nutrition { 
   border-top:1px solid black; 
 }
 #nutritionfacts div.labellight { 
@@ -123,3 +124,33 @@ padding: 3px;
   border-color: var(--secondary-color);
 
 }
+
+
+
+
+@media(max-width: 1200px){
+
+
+  }
+  /* ----------------------------BELOW 512 px--------------------------------- */
+@media(max-width: 512px){
+  
+  
+
+  .nutritionfacts-container{
+
+
+}
+  
+  #nutritionfacts{
+    max-width: 300px;
+  }
+  
+  
+  }
+  /* ----------------------------BELOW 320 px--------------------------------- */
+@media(max-width: 320px){
+  
+  
+  
+  }

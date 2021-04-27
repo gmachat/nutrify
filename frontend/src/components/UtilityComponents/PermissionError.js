@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 
 
 function PermissionError(props) {
-  console.log(props)
   return (
 
     <div className="main-grid">

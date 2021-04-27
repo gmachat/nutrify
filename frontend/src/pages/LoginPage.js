@@ -7,7 +7,6 @@ const Login = ({isLoggedIn, handleLogin}) => {
 
   const handleSubmit = async (e) => {
     const res = await handleLogin(e)
-    console.log(res)
     if(!res.ok) setErrorMessage("Invalid username or password")
     
   }
@@ -34,7 +33,7 @@ const Login = ({isLoggedIn, handleLogin}) => {
             <input type='password' placeholder='Password' name='password' />
             <button type='submit' >Login</button>
           </form>
-          <div className="secondary-backdrop text-section secondary-on-primary">
+          <div className="secondary-backdrop text-section secondary-on-primary" style={{textAlign: 'center'}}>
           New Here? <Link to='/signup' className="mid-sentence-link-secondary">Signup</Link>
           </div>
         </div>

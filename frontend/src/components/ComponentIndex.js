@@ -9,6 +9,8 @@ import DisplayRecipeList from "./DisplayRecipeList"
 import Dashboard from './Dashboard'
 import NutritionFacts from './NutritionFacts'
 import FullScreenConfirmation from './FullScreenConfirmation'
+import Footer from './Footer'
 
 
-export  {NavBar, NutritionSideBar, RecipeFields, IngredientInputs, MustLogin, DisplayRecipeList, Dashboard, PermissionError, EditRecipeFields, NutritionFacts, FullScreenConfirmation}
+
+export  {NavBar, NutritionSideBar, RecipeFields, IngredientInputs, MustLogin, DisplayRecipeList, Dashboard, PermissionError, EditRecipeFields, NutritionFacts, FullScreenConfirmation, Footer}

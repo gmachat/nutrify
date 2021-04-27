@@ -19,8 +19,7 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
     }, 100)
   }
 
-  console.log('rerender')
-    // const autoCompleteMenu = <div>heres</div>
+
 
   const handleAutoCompleteClick = async (event) => {
     //creates a "Mock event" to handle submission similiar to input
@@ -33,7 +32,6 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
         }
       }
     }
-    console.log(mockEvent)
     handleIngredientInput(mockEvent)
     setAutoCompleteList(null)
     clearAutoComplete()
@@ -42,7 +40,6 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
   const autoCompleteGrabber = async (input) =>{
 
     const autoCompleteData = await recipeAutoComplete(input.target.value)
-    console.log('inautocomplete')
     setAutoCompleteList(input.target.dataset.inputnumber)
     setAutoComplete(autoCompleteData)
     return autoCompleteData
@@ -55,10 +52,7 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
     const [name, number] = e.target.name.split('-')
     const updateForms = [...ingredientForms]
     const newForm = {...updateForms[number]}
-    console.log(newForm[name])
     if(name == 'quantity'){
-      console.log('quantitycheck')
-      console.log(/^([1-9]{0,2})?(\s)?([1-9]{1}\/)?([2,3,4,8])?$/.test(e.target.value))
       //check to make usre number is integer or valid fraction
       if(!/^([1-9]{0,2})?(\s)?([1-9]{1})?(\/)?([2,3,4,8])?$/.test(e.target.value) && e.target.value != "") return 
     }
@@ -89,13 +83,6 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
 
     }
   
-
-    // useEffect(() => {
-    //   console.log(autoComplete)
-    //   handleIngredientInput(autoCompleteTarget)
-    // }, [autoCompleteTarget])
-
-
 
       return (
       <Fragment>

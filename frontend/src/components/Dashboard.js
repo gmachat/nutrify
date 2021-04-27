@@ -8,7 +8,6 @@ function Dashboard({userInfo, searchTerms, setSearchTerms}) {
 
 
 
-  console.log('homepage', userInfo)
   if(userInfo?.isLoggedIn){
   return (
     <div className="dashboard-main">

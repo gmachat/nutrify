@@ -12,7 +12,7 @@ import {awsConfig} from '../../Utils/AWS/AWSConfig'
 
 
 function EditRecipeFields({props}) {
-  const {recipe} = props
+  const {recipe, userInfo} = props
 
   const [ingredientForms, setIngredientForms] = useState([{'quantity': '', 'measurement': '', 'ingredient': ''}])
   const [submitError, setSubmitError] = useState(null)
@@ -195,9 +195,11 @@ function EditRecipeFields({props}) {
       </div>
       <div className="ingredients-list">
       <div className='ingredient-wrapper'>
-        <div>Ingredients</div>
+        <div style={{textAlign:"center"}}>Ingredients</div>
         <IngredientInputs removeIngredientField={removeIngredientField} setIngredientForms={setIngredientForms} ingredientForms={ingredientForms}  />
+        <div className="add-ingredient-button-container" >
         <div className="add-ingredient-button" onClick={() => addIngredientField ()}>Add Ingredient</div>
+        </div>
       </div>
       </div>
       <div className='form-section'>

@@ -1,3 +1,8 @@
+import  gluten_free_logo from '../resources/images/recipe_icons/gluten_free_logo_white.webp'
+import  paleo_logo from '../resources/images/recipe_icons/paleo_logo_white.webp'
+import  keto_logo from '../resources/images/recipe_icons/keto_logo_white.webp'
+import  vegetarian_logo from '../resources/images/recipe_icons/vegetarian_logo_white.webp'
+import  vegan_logo from '../resources/images/recipe_icons/vegan_logo_white.webp'
 
 export const formatRecipeForAnalysis = (recipeObj) => {
   const analysisObj = {
@@ -12,7 +17,7 @@ export const formatRecipeForAnalysis = (recipeObj) => {
 export const labelNutrition = (ntr) => {
   return {
     servingSizeWeight: Math.round(ntr?.totalWeight), 
-    calories: Math.round(ntr?.calories),
+    calories: Math.ceil(ntr?.calories),
     caloriesFromFat: Math.round(ntr?.totalNutrientsKCal?.FAT_KCAL?.quantity),
     totalFat: ntr?.totalNutrients?.FAT?.quantity.toFixed(1),
     totalFatPct: Math.round(ntr?.totalDaily?.FAT?.quantity),
@@ -48,7 +53,30 @@ export const labelNutrition = (ntr) => {
   } 
 }
 
-
+export const getMainHealthLabels = (recipe) => {
+  if(!recipe.nutrition) return
+   const healthLabels = []
+   recipe?.nutrition?.healthLabels?.map((label) => {
+     switch(label){
+       case "VEGETARIAN":
+         healthLabels.push({img: vegetarian_logo, alt: 'vegetarian_logo'})
+         break
+       case "KETO_FRIENDLY":
+         healthLabels.push({img: keto_logo, alt: 'keto_logo'})
+         break
+       case "PALEO":
+           healthLabels.push({img: paleo_logo, alt: 'paleo_logo'})
+         break
+       case "GLUTEN_FREE":
+         healthLabels.push({img: gluten_free_logo, alt: 'gluten_free_logo'})
+         break
+       case "VEGAN":
+         healthLabels.push({img: vegan_logo, alt: 'vegan_logo'})
+         break
+     }
+ })
+ return healthLabels.map((el) => <img key={el.alt} className='health-label' src={el.img} alt={el.alt} />)
+}
 
 
 

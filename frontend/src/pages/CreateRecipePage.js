@@ -5,7 +5,7 @@ import {UserContext} from '../App'
 
 function CreateRecipePage(props) {
   const user = useContext(UserContext)
-
+  if (user.user ){
   return (
     <div className="main-grid">
     <div className="left-sidebar">
@@ -16,12 +16,14 @@ function CreateRecipePage(props) {
 
     </div>
     <div className="main-column-bottom">
-      {user.user ? <RecipeFields props={props}/> : <MustLogin userAction="create a recipe"></MustLogin>}
+      <RecipeFields props={props}/>
     </div>
     <div className="right-sidebar">
     </div>
   </div>
-  )
+  )}else{
+    return <MustLogin userAction="create a recipe"></MustLogin>
+  }
 }
 
 export default CreateRecipePage
