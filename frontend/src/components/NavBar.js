@@ -10,14 +10,17 @@ function NavBar() {
   if(userInfo.user){
     loginStatus =  (
         <div className="login-logout-box">
-          <div>Logged in as: {userInfo.user.username} </div>
-          <button className="link" onClick={userInfo.handleLogout}>Logout</button>
+          <Link to="/recipes/new" className={'nav-item'}>
+             Nutrify
+          </Link>
+         <Link to={`/profiles/${userInfo.user.id}`} className={'nav-item'}>{userInfo.user.username}</Link>
+          <button className="logout-button" onClick={userInfo.handleLogout}>Logout</button>
         </div>
     )
   }else{
     loginStatus =  (
-    <div className="login-logout-box">
-      <Link to="/login">Login</Link> or <Link to="/signup">Sign Up</Link>
+    <div className={'login-logout-box'}>
+      <Link to="/login" className="nav-item">Login</Link> <Link to="/signup" className="nav-item">Sign Up</Link>
     </div>
     )
   }
@@ -27,15 +30,16 @@ function NavBar() {
     <Link className="nav-logo-link" to="/"><img className="nav-logo" src={NutrifyLogo} /></Link>
     {userInfo.user && (
       <div className="nav-align-center">
-      <Link to={`/profiles/${userInfo.user.id}`}>
+      {/* <Link to={`/profiles/${userInfo.user.id}`} className={'nav-item'}>
         Profile
-      </Link>
-      <Link to="/recipes/new">
+      </Link> */}
+      {/* <Link to="/recipes/new" className={'nav-item'}>
         Create
-      </Link>
+      </Link> */}
     </div>
     )}
     <div className="nav-align-right">
+      
   {loginStatus}
   </div>
 </div>)

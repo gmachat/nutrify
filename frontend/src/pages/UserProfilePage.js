@@ -32,34 +32,28 @@ function UserProfilePage(props) {
   }, [])
 
   useEffect(() => { 
-    getUsersCreatedRecipes()
+    // getUsersCreatedRecipes()
     getJoinDate()
   }, [userProfile])
 
   return (
     <div className="main-grid">
       <div className="left-sidebar">
-       Someones Comments
       </div>
-      <div className="main-column-top">
       <div className="profilepage-top">
 
         <h1>{userProfile?.user.username}'s Profile</h1>
         <div>Joined: {getJoinDate()}</div>
         </div>
-      </div>
-      <div className="main-column-bottom">
         <div className="profilepage-bottom">
           <div className="profile-recipe-header-container">
         <h2>{userProfile?.created_recipes.length > 0 ? `${userProfile?.user.username}'s Recipes` : `${userProfile?.user.username} hasn't created any recipes yet!`}</h2>
         </div>
         <div className="main-recipe-list">
-       {userProfile?.created_recipes && <DisplayRecipeList recipeList={userProfile.created_recipes} startLimit={4}/>}
+       {userProfile?.created_recipes.length > 0 && <DisplayRecipeList profileRecipes={userProfile.created_recipes} startLimit={4} allowLoadMore={true}/>}
        </div>
        </div>
-      </div>
       <div className="right-sidebar">
-        Shortcuts
       </div>
       
     </div>

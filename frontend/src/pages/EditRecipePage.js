@@ -36,11 +36,10 @@ function EditRecipePage(props) {
       {/* <NutritionSideBar nutrition={recipeNutrition} /> */}
     </div>
     { user?.user?.id && <div className="main-column-top createRecipePage-header"><h1>Edit Your Recipe</h1> </div>}
-    <div className="main-column-bottom">
+    <div className="main-column-bottom ">
       {userAccess()}
     </div>
     <div className="right-sidebar">
-      calculator for minutes-hours
     </div>
   </div>
   )

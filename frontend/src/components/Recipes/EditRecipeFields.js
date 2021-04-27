@@ -101,6 +101,7 @@ function EditRecipeFields({props}) {
         ingredientChanges = true
     }
     setSendingData(true)
+    console.log('ingredientchange?', ingredientChanges)
     if(ingredientChanges){
       try{
       const nutritionAnalysis= await getRecipeAnalysis(formatRecipeForAnalysis(recipeObj))
@@ -172,6 +173,8 @@ function EditRecipeFields({props}) {
 
 
   return (
+    <div className="primary-backdrop primary-on-secondary create-form-container">
+
     <form className="create-recipe-form" onSubmit={(e) => handleRecipeSubmit(e)} >
       {sendingData && <div className='sending-data'><Loader type="TailSpin" color="#26b421" height={80} width={80} /></div>}
       {submitError && (<div className="form-error danger">
@@ -210,6 +213,7 @@ function EditRecipeFields({props}) {
       </div>
         <button type="submit" className="recipe-submit">Submit Changes!</button>
       </form>
+      </div>
   )
 }
 

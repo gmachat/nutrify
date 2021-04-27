@@ -8,6 +8,7 @@ import PermissionError from './UtilityComponents/PermissionError'
 import DisplayRecipeList from "./DisplayRecipeList"
 import Dashboard from './Dashboard'
 import NutritionFacts from './NutritionFacts'
+import FullScreenConfirmation from './FullScreenConfirmation'
 
 
-export  {NavBar, NutritionSideBar, RecipeFields, IngredientInputs, MustLogin, DisplayRecipeList, Dashboard, PermissionError, EditRecipeFields, NutritionFacts}
+export  {NavBar, NutritionSideBar, RecipeFields, IngredientInputs, MustLogin, DisplayRecipeList, Dashboard, PermissionError, EditRecipeFields, NutritionFacts, FullScreenConfirmation}

@@ -106,9 +106,9 @@ const getSingleIngredient = async (text) => {
 
 //-------------------------DATABASE CALLS--------------------------------------//
 
-const getUserRecipes = async () => {
+const getUserRecipes = async (page=1) => {
   console.log('firing userrecipe func')
-  let recipes = await fetch(`${BASE_URL}nutrify/recipes/`)
+  let recipes = await fetch(`${BASE_URL}nutrify/recipes/?page=${page}`)
   recipes = await recipes.json()
   recipes.reverse()
   return recipes
@@ -141,6 +141,19 @@ const updateRecipe = async (recipeObj, recipe_id) => {
   return recipe
 }
 
+const deleteRecipe = async (recipe_id, token) => {
+  console.log('deleteing recipe...')
+  let recipe = await fetch(`${BASE_URL}nutrify/recipes/${recipe_id}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${token}`
+    },
+    method: "DELETE"
+  })
+  recipe = await recipe.json()
+  return recipe
+}
+
 const getUserProfile = async (userId) => {
   console.log('firing get recipebyuserid func for ', userId)
   let profile = await fetch(`${BASE_URL}nutrify/profiles/${userId}/`)
@@ -149,19 +162,20 @@ const getUserProfile = async (userId) => {
   return profile
 }
 
-const getUsersCreatedRecipes = async (recipeList) => {
-  let recipes = await fetch(`${BASE_URL}nutrify/recipes/`)
+const getUsersCreatedRecipes = async (page=1) => {
+  let recipes = await fetch(`${BASE_URL}nutrify/recipes/${page}`)
   recipes = await recipes.json()
   recipes.reverse()
   return recipes
 }
 
-const getRecipeBySearchParams = async (keyword) => {
-  let recipes = await fetch(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}`)
+const getRecipeBySearchParams = async (keyword, page=1) => {
+  console.log(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}&page=${page}`)
+  let recipes = await fetch(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}&page=${page}`)
   recipes = await recipes.json()
   recipes.reverse()
   return recipes
 }
 
 
-export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient, getRecipeBySearchParams, updateRecipe}
+export {getRecipeAnalysis, getFoodNutrients, getUserRecipeById, createNewRecipe, getUserRecipes, getUserProfile, recipeAutoComplete, getUsersCreatedRecipes, getSingleIngredient, getRecipeBySearchParams, updateRecipe, deleteRecipe}

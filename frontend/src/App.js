@@ -36,12 +36,15 @@ function App() {
       password: evt.target.password.value,
     }
     let response = await login(userObject);
+    if(response.ok){
     let data = await response.json();
     if (data.token) {
       localStorage.setItem("auth-user", `${data.token}`);
       setIsLoggedIn(true);
       setUser(data.user);
     }
+      }
+    return response
   }
 
   const handleLogout = () => {

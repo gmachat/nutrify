@@ -19,7 +19,6 @@ function CreateRecipePage(props) {
       {user.user ? <RecipeFields props={props}/> : <MustLogin userAction="create a recipe"></MustLogin>}
     </div>
     <div className="right-sidebar">
-      calculator for minutes-hours
     </div>
   </div>
   )

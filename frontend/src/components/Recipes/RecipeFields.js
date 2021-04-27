@@ -113,7 +113,8 @@ function RecipeFields({props}) {
 
 
   return (
-    <form className="create-recipe-form" onSubmit={(e) => handleRecipeSubmit(e)} >
+    <div className="primary-backdrop primary-on-secondary create-form-container">
+    <form className="create-recipe-form " onSubmit={(e) => handleRecipeSubmit(e)} >
       <h2>Show us what you got!</h2>
       {sendingData && <div className='sending-data'><Loader type="TailSpin" color="#26b421" height={80} width={80} /></div>}
       {submitError && (<div className="form-error danger">
@@ -140,7 +141,6 @@ function RecipeFields({props}) {
       </div>
       </div>
       <div className='form-section'>
-        {/* <label htmlFor={'preperation'}>Preperation</label> */}
         <textarea name={'preperation'} data-formtype='preperation' placeholder="How do you prepare this dish?"></textarea>
       </div>
       <div className="form-section">
@@ -148,6 +148,7 @@ function RecipeFields({props}) {
       </div>
         <button type="submit" className="recipe-submit">Nutrify!</button>
       </form>
+      </div>
   )
 }
 
