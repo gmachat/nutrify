@@ -103,9 +103,9 @@ const getSingleIngredient = async (text) => {
 //-------------------------DATABASE CALLS--------------------------------------//
 
 const getUserRecipes = async (page=1) => {
+  console.log('firing userrecipe func')
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/?page=${page}`)
   recipes = await recipes.json()
-  recipes.reverse()
   return recipes
 }
 
@@ -158,14 +158,12 @@ const getUserProfile = async (userId) => {
 const getUsersCreatedRecipes = async (page=1) => {
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/${page}`)
   recipes = await recipes.json()
-  recipes.reverse()
   return recipes
 }
 
 const getRecipeBySearchParams = async (keyword, page=1) => {
   let recipes = await fetch(`${BASE_URL}nutrify/recipes/?search=${keyword.toLowerCase()}&page=${page}`)
   recipes = await recipes.json()
-  recipes.reverse()
   return recipes
 }
 

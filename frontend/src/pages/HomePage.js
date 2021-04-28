@@ -9,9 +9,7 @@ function HomePage() {
   const [searchTerms, setSearchTerms] = useState('')
   const userInfo = useContext(UserContext)
   
-  // useEffect(() => {
-  //   console.log('changsssssew')
-  // },[searchTerms])
+
 
   return (
     <div className="main-grid">

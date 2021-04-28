@@ -21,17 +21,14 @@ function EditRecipeFields({props}) {
   const [editedRecipe, setEditedRecipe] = useState(recipe)
   const ingredientValues = useRef({});
 
-  console.log('render', ingredientValues)
   const handleNormalFieldInputs = (e) => {
     e.preventDefault()
     let edit = {...editedRecipe}
     edit[e.target.dataset.formtype] = e.target.value
-    console.log(edit)
     setEditedRecipe(edit)
   }
 
 
-  console.log(recipe.ingredients)
   const fillIngredientForms = () => {
     const filledForms = []
     for(let ingredient of recipe.ingredients){
@@ -40,7 +37,6 @@ function EditRecipeFields({props}) {
       let quantity = splitIngredient[0]
       if(/^([1-9]{0,3})(\/)?([2,3,4,8])?$/.test(splitIngredient[1])){
         quantity+= ` ${splitIngredient[1]}`
-        console.log(quantity)
         fraction += 1
       }
 
@@ -60,8 +56,7 @@ function EditRecipeFields({props}) {
 
 
   const user = useContext(UserContext)
-  console.log(user)
-  console.log(user.user.id)
+ 
 
 
   const handleRecipeSubmit = async (e) => {
@@ -85,7 +80,6 @@ function EditRecipeFields({props}) {
         continue
       }else if(field.dataset.formtype === 'title'){
         const title = field.value.toLowerCase()
-        console.log(title)
         recipeObj['title'] = title
       }else{
         if(field.value) recipeObj[field.name] = field.value
@@ -97,11 +91,9 @@ function EditRecipeFields({props}) {
     let ingredientChanges;
     for(let i =0; i < recipeObj['ingredients'].length; i++){
       if(recipeObj['ingredients'][i] !== recipe['ingredients'][i]){
-        console.log('changedetected')
         ingredientChanges = true
     }
     setSendingData(true)
-    console.log('ingredientchange?', ingredientChanges)
     if(ingredientChanges){
       try{
       const nutritionAnalysis= await getRecipeAnalysis(formatRecipeForAnalysis(recipeObj))
@@ -115,32 +107,25 @@ function EditRecipeFields({props}) {
       }catch(err){
         setSendingData(false)
         setSubmitError("Could not retrieve recipe information")
-        console.error(err)
       return
       }
     }else{
-      console.log('fetching old nutrients')
       recipeObj['nutrition'] = recipe['nutrition']
     }
-    console.log(recipeObj)
-    console.log('sending picture to s3')
+
     try{
       if (recipeImage) data = await S3FileUpload.uploadFile(recipeImage, awsConfig)
-      console.log('data uploaded')
-      console.log(data)
+
     }catch(err){
       setSendingData(false)
       setSubmitError("Could not upload Image. Please upload without image or try again later")
       console.error(err)
       return
     }
-    console.log('storing data...')
     if(data) recipeObj['recipe_image'] = data.location.replace(/\s+/g, '%20') 
-    console.log(recipeObj['recipe_image'])
 
 
     const updatedRecipe = await updateRecipe(recipeObj, recipe.id)
-    console.log(updatedRecipe)
     setSendingData(false)
     props.history.push(`/recipes/${recipe.id}`)
   }
@@ -182,16 +167,16 @@ function EditRecipeFields({props}) {
                         <div>{submitError}</div>
                       </div>)}
       <div className='form-section'>
-        <input type="text" data-formtype='title' placeholder="Name of recipe" name={'title'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.title}></input >
+        <input type="text" data-formtype='title' autoComplete="off" placeholder="Name of recipe" name={'title'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.title}></input >
       </div>
       <div className='form-section'>
-        <input type="number" data-formtype='prep_time' placeholder='Prep Time' name={'prep_time'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.prep_time}></input >
+        <input type="number" data-formtype='prep_time' autoComplete="off" placeholder='Prep Time' name={'prep_time'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.prep_time}></input >
       </div>
       <div className='form-section'>
-        <input type="number" data-formtype='cook_time' placeholder="Cook time"name={'cook_time'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.cook_time}></input >
+        <input type="number" data-formtype='cook_time' autoComplete="off" placeholder="Cook time"name={'cook_time'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.cook_time}></input >
       </div>
       <div className='form-section'>
-        <input type='number' data-formtype='yields' placeholder="Number of Servings" name={'yields'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.yields}></input>
+        <input type='number' data-formtype='yields' autoComplete="off" placeholder="Number of Servings" name={'yields'} onChange={e => handleNormalFieldInputs(e)} value={editedRecipe.yields}></input>
       </div>
       <div className="ingredients-list">
       <div className='ingredient-wrapper'>

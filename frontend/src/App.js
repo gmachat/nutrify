@@ -80,9 +80,11 @@ function App() {
               <Route exact path="/profiles/:user_id/" component={UserProfilePage} />
               <Route component={NotFoundPage} />
             </Switch>
-            <Footer />
+
           </ UserContext.Provider>
       </Router>
+      <Footer />
+
     </div>
   );
 }

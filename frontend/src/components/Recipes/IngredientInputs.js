@@ -91,7 +91,7 @@ function IngredientInputs({removeIngredientField, ingredientForms, setIngredient
           return (
             <div className='ingredient-form-section' key={`ingredient-${i}`}>
               <span>
-              <input type='text' data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)} className="quantity" placeholder='Quantity'/>
+              <input type='text' autoComplete="off" data-formtype='quantity' name={`quantity-${i}`} value={inputEl.quantity} required onChange={(e) => handleIngredientInput(e)} className="quantity" placeholder='Quantity'/>
               </span>
               <span>
               {/* <label htmlFor={`measurement-${i}`}>Measurement</label> */}

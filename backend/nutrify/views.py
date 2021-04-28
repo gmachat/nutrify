@@ -37,21 +37,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
-    # def destroy(self, request, pk=None, **kwargs):
-    #     print(self.request.user.is_authenticated)
-    #     print(self.request.META.get("HTTP_AUTHORIZATION"))
-    #     try:
-    #         recipe = Recipe.objects.get(created_by=self.request.user.id) 
-    #         print(recipe)
-    #         recipe.delete()
-    #     except Recipe.DoesNotExist:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST)
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-
-    # def get_authenticators(self):
-    #     user = TokenAuthentication().authenticate(self.request)
-    #     print('user', user)
-
 
     
     def get_queryset(self):
@@ -60,9 +45,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         
         if search:
-            recipes = Recipe.objects.filter(title__contains=search)
+            recipes = Recipe.objects.filter(title__contains=search).order_by('-id')
         else:
-            recipes = Recipe.objects.all()
+            recipes = Recipe.objects.all().order_by('-id')
         if page:
             paginated = Paginator(recipes, 6)
             if int(page) > paginated.num_pages:

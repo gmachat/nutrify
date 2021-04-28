@@ -26,8 +26,6 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
         if(!profileRecipes){
             if(!searchTerms){
                 newRecipes = await getUserRecipes(paginationNumber)
-                console.log(newRecipes.length)
-
                 if (newRecipes.length == 0) setEndOfResults(true)
                 if(paginationNumber === 1){
                   setRecipeList(newRecipes)
@@ -47,7 +45,7 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
           if (currentLimit >= profileRecipes.length && currentLimit > startLimit){
             setEndOfResults(true)
           }else{
-            setRecipeList(profileRecipes)
+            setRecipeList(profileRecipes.reverse())
         }
         }
         return newRecipes
@@ -61,8 +59,8 @@ function DisplayRecipeList({startLimit,  allowLoadMore=false, setSearchTerms, se
       }
 
       const goBack = async (e) => {
-        resetList()
         setSearchTerms('')
+        resetList()
       }
 
       const viewMoreRecipes = () => {

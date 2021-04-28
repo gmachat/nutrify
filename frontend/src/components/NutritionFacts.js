@@ -25,7 +25,6 @@ function NutritionFacts({props}) {
       for(let nutrientValue of Object.keys(labeledNutrition)){
         labeledNutrition[nutrientValue] = Math.round(labeledNutrition[nutrientValue] / recipe.yields)
       }
-      console.log(labeledNutrition)
     }
  
   return (

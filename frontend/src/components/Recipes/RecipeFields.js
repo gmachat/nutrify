@@ -18,8 +18,7 @@ function RecipeFields({props}) {
   const [attempt, setAttempt] = useState(0)
 
   const user = useContext(UserContext)
-  console.log(user)
-  console.log(user.user.id)
+
 
 
   const handleRecipeSubmit = async (e) => {
@@ -43,14 +42,12 @@ function RecipeFields({props}) {
         continue
       }else if(field.dataset.formtype === 'title'){
         const title = field.value.toLowerCase()
-        console.log(title)
         recipeObj['title'] = title
       }else{
         if(field.value) recipeObj[field.name] = field.value
       }
     }
     recipeObj['ingredients'] = ingredients
-    console.log(recipeObj)
     setSendingData(true)
     try{
     const nutritionAnalysis= await getRecipeAnalysis(formatRecipeForAnalysis(recipeObj))
@@ -67,25 +64,20 @@ function RecipeFields({props}) {
       console.error(err)
     return
     }
-    console.log(recipeObj)
-    console.log('sending picture to s3')
+
     try{
       if (recipeImage) data = await S3FileUpload.uploadFile(recipeImage, awsConfig)
-      console.log('data uploaded')
-      console.log(data)
+
     }catch(err){
       setSendingData(false)
       setSubmitError("Could not upload Image. Please upload without image or try again later")
       console.error(err)
       return
     }
-    console.log('storing data...')
     if(data) recipeObj['recipe_image'] = data.location.replace(/\s+/g, '%20') 
-    console.log(recipeObj['recipe_image'])
     recipeObj['created_by'] = user.user.id
 
     const createdRecipe = await createNewRecipe(recipeObj)
-    console.log(createdRecipe)
     setSendingData(false)
     props.history.push(`/recipes/${createdRecipe.id}`)
   }
@@ -122,16 +114,16 @@ function RecipeFields({props}) {
                         <div>{submitError}</div>
                       </div>)}
       <div className='form-section'>
-        <input type="text" data-formtype='title' placeholder="Name of recipe" name={'title'}></input >
+        <input type="text" data-formtype='title' placeholder="Name of recipe" name={'title'} autoComplete="off"></input >
       </div>
       <div className='form-section'>
-        <input type="number" data-formtype='prep_time' placeholder='Prep Time' name={'prep_time'}></input >
+        <input type="number" data-formtype='prep_time' placeholder='Prep Time' name={'prep_time'} autoComplete="off"></input >
       </div>
       <div className='form-section'>
-        <input type="number" data-formtype='cook_time' placeholder="Cook time"name={'cook_time'}></input >
+        <input type="number" data-formtype='cook_time' placeholder="Cook time"name={'cook_time'} autoComplete="off"></input >
       </div>
       <div className='form-section'>
-        <input type='number' data-formtype='yields' placeholder="Number of Servings" name={'yields'}></input>
+        <input type='number' data-formtype='yields' placeholder="Number of Servings" name={'yields'} autoComplete="off"></input>
       </div>
       <div className="ingredients-list">
       <div className='ingredient-wrapper'>
